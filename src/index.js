@@ -1,23 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 
-import {App} from './App';
-import store from '../src/store';
-import { checkLogin } from '../src/modules/Authorization/authorizationSlice';
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-/*проверяем, остлася ли сохраненный JWT token в localStorage
-только после проверки выполняем render всего портала*/
-store.dispatch(checkLogin())
-  .then(()=>{
-    ReactDOM.render(
-      <React.StrictMode>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </React.StrictMode>,
-      document.getElementById('root')
-    );
-  })
+ReactDOM.render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>,
+    document.getElementById("root")
+);
 
-
+serviceWorker.unregister();

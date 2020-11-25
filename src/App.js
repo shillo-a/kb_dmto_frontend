@@ -1,43 +1,118 @@
-import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Switch, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
-import { HomePage } from './common/components/HomePage'
-import { PersonalPage } from './common/components/PersonalPage'
-import { PersonalNavbar } from './common/components/PersonalNavbar'
-import { SignUpForm } from './modules/Authorization/components/SignUpForm'
-import { SignInForm } from './modules/Authorization/components/SignInForm'
-import { AdminPage } from './common/components/AdminPage'
+import AuthService from "./services/auth.service";
 
-import { MainRoleProjectPage } from './modules/RoleProject/components/MainRoleProjectPage'
-import { EditRoleProjectPage } from './modules/RoleProject/components/EditRoleProjectPage'
-import { AdminNavbar } from './common/components/AdminNavbar'
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import BoardUser from "./components/BoardUser";
+import BoardModerator from "./components/BoardModerator";
+import BoardAdmin from "./components/BoardAdmin";
 
-export const App = () => {
+const App = () => {
+  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+    }
+  }, []);
+
+  const logOut = () => {
+    AuthService.logout();
+  };
+
   return (
-    <Router>
-      <div className="App">            
+    <div>
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <Link to={"/"} className="navbar-brand">
+          bezKoder
+        </Link>
+        <div className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to={"/home"} className="nav-link">
+              Home
+            </Link>
+          </li>
+
+          {showModeratorBoard && (
+            <li className="nav-item">
+              <Link to={"/mod"} className="nav-link">
+                Moderator Board
+              </Link>
+            </li>
+          )}
+
+          {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/admin"} className="nav-link">
+                Admin Board
+              </Link>
+            </li>
+          )}
+
+          {currentUser && (
+            <li className="nav-item">
+              <Link to={"/user"} className="nav-link">
+                User
+              </Link>
+            </li>
+          )}
+        </div>
+
+        {currentUser ? (
+          <div className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <Link to={"/profile"} className="nav-link">
+                {currentUser.username}
+              </Link>
+            </li>
+            <li className="nav-item">
+              <a href="/login" className="nav-link" onClick={logOut}>
+                LogOut
+              </a>
+            </li>
+          </div>
+        ) : (
+          <div className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <Link to={"/login"} className="nav-link">
+                Login
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to={"/register"} className="nav-link">
+                Sign Up
+              </Link>
+            </li>
+          </div>
+        )}
+      </nav>
+
+      <div className="container mt-3">
         <Switch>
-
-          <Route exact path= "/" render={()=>{return( <HomePage /> )}} />
-          <Route exact path="/signup"  render={()=>{return( <SignUpForm /> )}} />
-          <Route exact path="/signin" render={()=>{return( <SignInForm /> )}} />
-          
-          <Route exact path= "/account/:username" render={(routeProps)=>{return(<React.Fragment> <PersonalNavbar {...routeProps}/> <PersonalPage {...routeProps}/> </React.Fragment>)}} />
-
-          <Route exact path="/admin" render={(routeProps)=>{return(<React.Fragment> <AdminNavbar {...routeProps}/> <AdminPage {...routeProps}/> </React.Fragment>)}} ></Route>
-          <Route exact path="/admin/roleprojects" render={(routeProps)=>{return(<React.Fragment> <AdminNavbar {...routeProps}/><MainRoleProjectPage {...routeProps}/> </React.Fragment>)}} ></Route>
-          <Route exact path="/admin/roleprojects/edit/:roleProjectId" render={(routeProps)=>{return(<React.Fragment> <AdminNavbar {...routeProps}/><EditRoleProjectPage {...routeProps}/></React.Fragment>)}}/>
-
-          <Redirect to= "/" />
-
+          <Route exact path={["/", "/home"]} component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/profile" component={Profile} />
+          <Route path="/user" component={BoardUser} />
+          <Route path="/mod" component={BoardModerator} />
+          <Route path="/admin" component={BoardAdmin} />
         </Switch>
       </div>
-    </Router>
+    </div>
   );
-}
+};
 
+export default App;
