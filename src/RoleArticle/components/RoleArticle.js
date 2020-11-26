@@ -3,7 +3,7 @@ import RoleArticleService from "../services/RoleArticleService";
 
 const RoleArticle = props => {
     const initialRoleArticleState = {
-        id: "author",
+        id: "",
         rolearticle: ""
     };
     const [currentRoleArticle, setCurrentRoleArticle] = useState(initialRoleArticleState);
@@ -59,13 +59,24 @@ const RoleArticle = props => {
                 <div className="edit-form">
                     <h4>Роль Статьи</h4>
                     <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Роль статьи</label>
+                    <div className="form-group">
+                            <label htmlFor="id">ID</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="title"
-                                name="title"
+                                id="id"
+                                name="id"
+                                value={currentRoleArticle.id}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="roleArticle">Роль</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="roleArticle"
+                                name="roleArticle"
                                 value={currentRoleArticle.roleArticle}
                                 onChange={handleInputChange}
                             />

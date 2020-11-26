@@ -15,7 +15,7 @@ const createRoleArticle = data => {
 };
 
 const updateRoleArticle = (id, data) => {
-    return http.put("/owner/rolearticle/" + id, data, { headers: authHeader() });
+    return http.put('/owner/rolearticle/'+id, data, { headers: authHeader() });
 };
 
 const deleteRoleArticle = id => {
