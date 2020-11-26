@@ -11,11 +11,12 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
-import BoardAdmin from "./components/BoardAdmin";
+import BoardOwner from "./components/BoardOwner";
+
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showOwnerBoard, setShowOwnerBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const App = () => {
     if (user) {
       setCurrentUser(user);
       setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      setShowOwnerBoard(user.roles.includes("ROLE_OWNER"));
     }
   }, []);
 
@@ -36,38 +37,40 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          bezKoder
+          Портал
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
-              Home
+              Дом
             </Link>
           </li>
+         
+          {currentUser && (
+              <li className="nav-item">
+                <Link to={"/user"} className="nav-link">
+                  User
+                </Link>
+              </li>
+          )}
 
           {showModeratorBoard && (
             <li className="nav-item">
               <Link to={"/mod"} className="nav-link">
-                Moderator Board
+                Доска модератора
               </Link>
             </li>
           )}
 
-          {showAdminBoard && (
+          {showOwnerBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
+              <Link to={"/owner"} className="nav-link">
+                Админка
               </Link>
             </li>
           )}
 
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
-          )}
+          
         </div>
 
         {currentUser ? (
@@ -79,7 +82,7 @@ const App = () => {
             </li>
             <li className="nav-item">
               <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
+                Выйти
               </a>
             </li>
           </div>
@@ -87,13 +90,13 @@ const App = () => {
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
-                Login
+                Логин
               </Link>
             </li>
 
             <li className="nav-item">
               <Link to={"/register"} className="nav-link">
-                Sign Up
+                Регистрация
               </Link>
             </li>
           </div>
@@ -108,8 +111,8 @@ const App = () => {
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} />
-        </Switch>
+          <Route path="/owner" component={BoardOwner} />
+       </Switch>
       </div>
     </div>
   );

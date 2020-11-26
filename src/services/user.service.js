@@ -15,13 +15,13 @@ const getModeratorBoard = () => {
   return axios.get(API_URL + "mod", { headers: authHeader() });
 };
 
-const getAdminBoard = () => {
-  return axios.get(API_URL + "admin", { headers: authHeader() });
+const getOwnerBoard = () => {
+  return axios.get(API_URL + "owner", { headers: authHeader() });
 };
 
 export default {
   getPublicContent,
   getUserBoard,
   getModeratorBoard,
-  getAdminBoard,
+  getOwnerBoard,
 };
