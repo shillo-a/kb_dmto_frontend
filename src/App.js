@@ -13,6 +13,10 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardOwner from "./components/BoardOwner";
 
+import TutorialsList from "./Tutorial/components/TutorialsList";
+import Tutorial from "./Tutorial/components/Tutorial";
+import AddTutorial from "./Tutorial/components/AddTutorial";
+
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -103,6 +107,24 @@ const App = () => {
         )}
       </nav>
 
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <a href="/tutorials" className="navbar-brand">
+            Tutorial
+          </a>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/tutorials"} className="nav-link">
+                Tutorials
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/add"} className="nav-link">
+                Add
+              </Link>
+            </li>
+          </div>
+        </nav>
+
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/home"]} component={Home} />
@@ -112,6 +134,9 @@ const App = () => {
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/owner" component={BoardOwner} />
+          <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
+            <Route exact path="/add" component={AddTutorial} />
+            <Route path="/tutorials/:id" component={Tutorial} />
        </Switch>
       </div>
     </div>
