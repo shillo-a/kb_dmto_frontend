@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RoleArticleService from "../services/RoleArticleService";
 import { Link } from "react-router-dom";
-import RoleArticle from "./RoleArticle";
+
 
 const RoleArticleList = () => {
     const [roleArticles, setRoleArticles] = useState([]);
@@ -23,11 +23,11 @@ const RoleArticleList = () => {
             });
     };
 
-    const refreshList = () => {
-        retrieveRoleArticles();
-        setCurrentRoleArticle(null);
-        setCurrentIndex(-1);
-    };
+    // const refreshList = () => {
+    //     retrieveRoleArticles();
+    //     setCurrentRoleArticle(null);
+    //     setCurrentIndex(-1);
+    // };
 
     const setActiveRoleArticle = (roleArticle, index) => {
         setCurrentRoleArticle(roleArticle);

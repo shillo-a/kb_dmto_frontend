@@ -51,17 +51,18 @@ const AddRoleArticle = () => {
             ) : (
                 <div>
                     <div className="form-group">
+                    <label htmlFor="id">ID</label>
                     <input
                             type="text"
                             className="form-control"
-                            id="title"
+                            id="id"
                             required
                             value={roleArticle.id}
                             onChange={handleInputChange}
                             name="id"
                         />
 
-                        <label htmlFor="title">Роль статьи</label>
+                        <label htmlFor="roleArticle">Роль статьи</label>
                         <input
                             type="text"
                             className="form-control"

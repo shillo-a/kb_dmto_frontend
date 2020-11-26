@@ -3,15 +3,15 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthService from "./services/auth.service";
+import AuthService from "./Authorization/services/auth.service";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
-import BoardModerator from "./components/BoardModerator";
-import BoardOwner from "./components/BoardOwner";
+import Login from "./Authorization/components/Login";
+import Register from "./Authorization/components/Register";
+import Home from "./Common/components/Home";
+import Profile from "./Authorization/components/Profile";
+import BoardUser from "./Common/components/BoardUser";
+import BoardModerator from "./Common/components/BoardModerator";
+import BoardOwner from "./Common/components/BoardOwner";
 
 import TutorialsList from "./Tutorial/components/TutorialsList";
 import Tutorial from "./Tutorial/components/Tutorial";

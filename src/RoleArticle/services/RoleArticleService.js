@@ -1,5 +1,5 @@
 import http from "../../http-common";
-import authHeader from "../../services/auth-header";
+import authHeader from "../../Authorization/services/auth-header";
 
 const getAllRoleArticle = () => {
     return http.get("/owner/rolearticle", { headers: authHeader() });
