@@ -9,12 +9,12 @@ const getAllPublishedArticles = (categoryId) => {
     return http.get(`/publishedarticles/${categoryId}`, { headers: authHeader() })
 }
 
-const getPublishedArcticle = (articleId) => {
-    return http.get(`arcticle/${articleId}`, { headers: authHeader() })
+const getPublishedArticle = (articleId) => {
+    return http.get(`/article/${articleId}`, { headers: authHeader() })
 }
 
 export default {
     getArticle,
     getAllPublishedArticles,
-    getPublishedArcticle
+    getPublishedArticle
   };

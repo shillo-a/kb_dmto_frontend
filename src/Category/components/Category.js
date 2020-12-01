@@ -7,7 +7,7 @@ const Category = ({ category }) => {
     const history = useHistory()
 
     const clickTransitionHandler = (event) => {
-        history.push(`category/${category.id}`)
+        history.push(`category/${category.id}/${category.key}`)
     }
 
     return (
