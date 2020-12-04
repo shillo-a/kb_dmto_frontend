@@ -10,11 +10,21 @@ const getAllAuthorArticles = () => {
 }
 
 const addArticleToFavorite = (articleId) => {
-    return http.post(`/userarticle/observer/${articleId}`, { headers: authHeader() })
+    return http.post(`/userarticle/addcurruser/${articleId}`, '', { headers: authHeader() })
+}
+
+const removeArticleFromFavorite = (articleId) => {
+    return http.delete(`/userarticle/${articleId}`, { headers: authHeader() })
+}
+
+const checkArticleIsFavorite = (articleId) => {
+    return http.get(`/userarticle/checkarticle/${articleId}`, { headers: authHeader() })
 }
 
 export default {
     getAllObserverArticles,
     addArticleToFavorite,
-    getAllAuthorArticles
+    getAllAuthorArticles,
+    removeArticleFromFavorite,
+    checkArticleIsFavorite
   };

@@ -1,57 +1,42 @@
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
 import React, { useEffect, useState } from 'react'
-import SectionService from '../services/SectionService'
+import DraftEditor from './DraftEditor'
+import { Button, Card, Col, Container, Form } from 'react-bootstrap'
+import DeleteSectionButton from './DeleteSectionButton'
 
-const Section = (props) => {
-
-    const [section, setSection] = useState('')
-
-    const getSection = (sectionId) => {
-        SectionService.getSection(sectionId)
-            .then(response => {
-                setSection(response.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
-
-    // const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(section.body)))
-    // const markupBody = draftToHtml(convertToRaw(JSON.parse(section.body)))
-    // // console.log(editorState)
-    // const createMarkup = (markup) => {
-    //     return {
-    //         __html: markup
-    //     }
-    // }
-
-
-    useEffect(()=>{
-        getSection(props.sectionId)
-    }, [])
-
-
-
-    var contnent = {__html: 'empty'}
-    if(section.body){
-        const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(section.body)))
-        const markupBody = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        const createMarkup = (markup) => {
-                return {
-                    __html: markup
-                }
-            }
-        contnent = createMarkup(markupBody)
-    }
-    
+const Section = ({ section, index, deleteSectionHandler, changeSectionHeadHandler, changeSectionBodyHandler }) => {
 
     return (
-        <div 
-        dangerouslySetInnerHTML={contnent}
-        >
-        </div>
+        <Card className="shadow p-3 mb-3 mt-3 rounded">
+            <Container>
+                <Form>
+                    <Form.Row>
+                        <Col xs={11}>
+                            <Form.Group controlId="setionHead">
+                                <Form.Label>Название раздела:</Form.Label>
+                                <Form.Control type="text" placeholder="Укажите название раздела" value={section.head} onChange={(event) => {changeSectionHeadHandler(event, index)}}/>
+                            </Form.Group>
+                        </Col>
+                        <Col xs={1}>
+                            <Form.Group className='text-center' controlId="setionHead">
+                                <Form.Label>№ п.п.:</Form.Label>
+                                <Form.Control type="text" placeholder="Укажите название раздела" value={index} className='text-center' disabled/>
+                            </Form.Group>
+                        </Col>
+                    </Form.Row>
+                    <Form.Row>
+                    <Form.Group controlId="setionBody">
+                        <Form.Label>Содержание раздела:</Form.Label>
+                        <DraftEditor sectionBody={section.body} index={index} changeSectionBodyHandler={changeSectionBodyHandler}/>
+                    </Form.Group>  
+                    </Form.Row>
+                </Form>
+                <DeleteSectionButton 
+                    deleteSectionHandler={deleteSectionHandler} 
+                    index={index}
+                />
+                
+            </Container>
+        </Card>
     )
 }
 

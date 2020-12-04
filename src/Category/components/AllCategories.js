@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CardGroup, Row , Spinner } from 'react-bootstrap';
+import { Row , Spinner } from 'react-bootstrap';
 import CategoryService from '../services/CategoryService';
 import Category from './Category';
 
@@ -7,10 +7,18 @@ const AllCategories = () => {
 
     const [categories, setCategories] = useState('')
 
+    const [statusGAC, setStatusGAC] = useState('idle')
     const getAllCategories = () => {
+        setStatusGAC('loading')
         CategoryService.getAllCategories()
-            .then(response => setCategories(response.data))
-            .catch(error => console.log(error))
+            .then(response => {
+                setCategories(response.data)
+                setStatusGAC('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusGAC('failed')
+            })
     }
 
     useEffect(()=>{
@@ -31,11 +39,9 @@ const AllCategories = () => {
     }
 
     return (
-    <CardGroup>
         <Row>
             {content}
-        </Row>
-    </CardGroup>
+        </Row> 
     )
 }
 

@@ -20,6 +20,8 @@ import AddRoleArticle from './RoleArticle/components/AddRoleArticle';
 
 import AllPublishedArticles from './Article/components/AllPublishedArticles';
 import PublishedArticle from './Article/components/PublishedArticle';
+import ArticleMaster from './ArticleMaster/components/ArticleMaster';
+
 
 
 const App = () => {
@@ -34,6 +36,7 @@ const App = () => {
           
           <Route exact path={'/category/:categoryId/:categoryKey'} component={AllPublishedArticles} />
           <Route exact path={'/article/:articleId'} component={PublishedArticle} />
+          <Route exact path={'/articlemaster'} component={ArticleMaster} />
 
           <Route exact path='/register' component={Register} />
           <Route exact path='/profile' component={Profile} />
