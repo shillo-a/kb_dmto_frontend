@@ -3,10 +3,9 @@ import { Button } from 'react-bootstrap'
 
 import ArticleService from '../../services/apis/article-service'
 import SectionService from '../../services/apis/section-service'
+import TransformService from '../../services/transforms/section-transform'
 
-const SaveArticleDraftButton = ({ article, addArticleId }) => {
-
-    const [articleId, setArticleId] = useState(null)
+const SaveArticleDraftButton = ({ article, articleId, addArticleId }) => {
 
     //CA - create article (without sections)
     const [statusCA, setStatusCA] = useState('idle')
@@ -15,7 +14,7 @@ const SaveArticleDraftButton = ({ article, addArticleId }) => {
         ArticleService.createArticle(article)
             .then(response => {
                 //сохраняем id вновь созданной статьи
-                setArticleId(response.data)
+                addArticleId(response.data)
                 setStatusCA('succedded')
             })
             .catch(error => {
@@ -41,15 +40,21 @@ const SaveArticleDraftButton = ({ article, addArticleId }) => {
 
     //создаем статью только если нет articleId
     const saveArticleHandler = (event) =>{
-        saveArticle(article)
+        if(!articleId){
+            saveArticle(article)
+        }   
     }
 
     //если появился articleId сохраняем
     useEffect(()=>{
         if(articleId){
-            addSectionsToArticle(articleId, article.sections)
+            addSectionsToArticle(
+                articleId, 
+                //Преобразуем текст c JSON в string JSON
+                TransformService.convertSectionBodyToJsonString(article.sections)
+            )
         }
-    }, articleId)
+    }, [articleId])
 
     return (
         <React.Fragment>

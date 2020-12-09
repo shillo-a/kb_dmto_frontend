@@ -56,7 +56,7 @@ const ArticleMaster = () => {
     }
 
     const [article, setArticle] = useState({
-        articleId: null,
+        articleId: '',
         title: null,
         categoryId: null,
         sections: [{

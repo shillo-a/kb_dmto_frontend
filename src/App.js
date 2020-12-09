@@ -32,7 +32,7 @@ const App = () => {
                 <Route exact path={'/article/:articleId'} component={PublishedArticle} />
                 <Route exact path={'/articlemaster'} component={ArticleMaster} />
 
-                <Redirect to={'/home'}/>
+                <Redirect to={'/login'}/>
             </Switch>
         </Container>
     </React.Fragment>
