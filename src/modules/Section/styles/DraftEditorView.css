@@ -1,0 +1,15 @@
+ /* избавляемся от контуров */
+  .wrapper-view-class {
+    padding: none !important;
+    border: none !important;
+  }
+
+/* избавляемся от лишних паддингов */
+  .editor-view-class {
+    padding: 0px !important;
+  }
+
+  /* Избавляемся от лишних побелов при Enter */
+  .public-DraftStyleDefault-block {
+    margin: 0 !important;
+  }
