@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Container, Nav, Tab } from 'react-bootstrap'
 
-import AllAuthorArticles from './ArticleManager/AllAuthorArticles'
-import AllObserverArticles from './ArticleManager/AllObserverArticles'
-import AllPublishedAuthorArticles from './ArticleManager/AllPublishedAuthorArticles'
+import AllAuthorArticles from '../ArticleManager/AllAuthorArticles'
+import AllObserverArticles from '../ArticleManager/AllObserverArticles'
+import AllPublishedAuthorArticles from '../ArticleManager/AllPublishedAuthorArticles'
 
-const ProfileArcticleManager = () => {
+const ProfileArticleManager = () => {
 
     return (
         <Container className="pt-3">
@@ -33,4 +33,4 @@ const ProfileArcticleManager = () => {
     )
 }
 
-export default ProfileArcticleManager;
+export default ProfileArticleManager;

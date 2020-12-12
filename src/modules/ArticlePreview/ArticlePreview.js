@@ -3,7 +3,7 @@ import { Container, Jumbotron } from 'react-bootstrap'
 
 import categoryService from '../../services/apis/category-service'
 
-import Contents from '../Article/Contents'
+import Contents from '../Section/Contents'
 import ArticleSections from '../ArticleSections/ArticleSections'
 
 

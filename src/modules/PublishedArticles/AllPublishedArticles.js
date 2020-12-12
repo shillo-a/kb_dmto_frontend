@@ -65,6 +65,7 @@ const AllPublishedArticles = ({ match }) => {
             <Jumbotron>
                 <Container>
                     <h3>{category.category}</h3>
+                    <p>Статей в категории - {publishedArticles.length}</p>
                 </Container>
             </Jumbotron>
             {content}

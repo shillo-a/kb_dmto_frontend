@@ -12,7 +12,7 @@ const ArticleExcerpt = ({ article }) => {
     }
 
     return (
-        <Card >
+        <Card className="mb-2">
             <Card.Body>
                 <Card.Title>{article.title}</Card.Title>
                 <Button variant="primary" onClick={clickTransitionHandler}>Перейти</Button>

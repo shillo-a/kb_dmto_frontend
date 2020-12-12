@@ -2,7 +2,7 @@ import React from 'react';
 import { Jumbotron, Tab, Tabs } from 'react-bootstrap';
 
 import AuthService from '../../services/apis/auth-service';
-import ProfileArcticleManager from './ProfileArcticleManager';
+import ProfileArticleManager from './ProfileArticleManager';
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
@@ -12,9 +12,11 @@ const Profile = () => {
       <Jumbotron>
         <h3>Здравствуйте, {currentUser.username} !</h3>
       </Jumbotron>
+
       <Tabs defaultActiveKey='articleManager' id='profile' className="justify-content-center">
-        <Tab eventKey='articleManager' title='Статьи'>
-          <ProfileArcticleManager />
+        <Tab eventKey='moderator' title='Проверка статей'></Tab>
+        <Tab eventKey='articleManager' title='Мои статьи'>
+          <ProfileArticleManager />
         </Tab>
         <Tab eventKey='profileSettings' title='Настройки'>
           {
@@ -56,6 +58,7 @@ const Profile = () => {
           }
         </Tab>
       </Tabs>
+
     </React.Fragment>
 
   );

@@ -6,7 +6,8 @@ import ArticleService from '../../services/apis/article-service'
 import TransformService from '../../services/transforms/article-transform'
 
 import FavoriteSign from './FavoriteSign';
-import Contents from '../Article/Contents'
+import Contents from '../Section/Contents'
+import ArticleSections from '../ArticleSections/ArticleSections'
 
 const PublishedArticle = ({ match }) => {
 
@@ -48,10 +49,11 @@ const PublishedArticle = ({ match }) => {
                     <FavoriteSign articleId={articleId}/>
                 </Col>
             </Row>
+            <span>{console.log(publishedArticle)}</span>
             </Jumbotron>
             <Container>
                 <Contents sections={publishedArticle.sections}/>
-                {/* <PublishedArticleSections /> */}
+                <ArticleSections sections={publishedArticle.sections}/>
             </Container>
         </React.Fragment>
     )

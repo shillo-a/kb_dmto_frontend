@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 
-import UserArticleService from '../../../services/apis/user-article-service'
+import UserArticleService from '../../services/apis/user-article-service'
 import AuthorArticleExcerpt from './AuthorArticleExcerpt'
 
 const AllAuthorArticles = () => {

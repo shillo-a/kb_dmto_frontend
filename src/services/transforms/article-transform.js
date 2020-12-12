@@ -2,7 +2,10 @@ const convertFromRawArticle = (startData) => {
 
     // Выбираем все секции из данных и отчищаем от потворяющихся значений
     const sections = startData.map(row => {
-        return{ head: row.head, body: row.body }
+        return{ 
+            head: row.head, 
+            body: JSON.parse(row.body)
+        }
     })
 
     // Выбираем первые значения из array

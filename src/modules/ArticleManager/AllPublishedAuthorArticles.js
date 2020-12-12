@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 
-import userArticleService from '../../../services/apis/user-article-service'
-import PublishedAuthorArticleExcerpt from './PublishedAuthorArticleExcerpt'
+import userArticleService from '../../services/apis/user-article-service'
+import ArticleExcerpt from '../Article/ArticleExcerpt'
 
 const AllPublishedAuthorArticles = () => {
     
@@ -34,7 +34,7 @@ const AllPublishedAuthorArticles = () => {
         content = authorArticles.map(authorArticle => {
             // Оставляем опубликованные статьи
             if(authorArticle.article.statusArticle.id === 'published'){
-                return(<PublishedAuthorArticleExcerpt key={authorArticle.id} authorArticle={authorArticle}/>)
+                return(<ArticleExcerpt key={authorArticle.id} article={authorArticle.article}/>)
             }
         })
     } else if(statusGAAA === 'succedded' && !authorArticles){

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 
-import UserArticleService from '../../../services/apis/user-article-service'
-import ObserverArticleExcerpt from './ObserverArticleExcerpt'
+import UserArticleService from '../../services/apis/user-article-service'
+import ArticleExcerpt from '../Article/ArticleExcerpt'
 
 const AllObserverArticles = () => {
 
@@ -33,7 +33,7 @@ const AllObserverArticles = () => {
     } else if(statusGAOA === 'succedded' && observerArticles){
         content = observerArticles.map(observerArticle => {
             return(
-                <ObserverArticleExcerpt key={observerArticle.id} observerArticle={observerArticle}/>
+                <ArticleExcerpt key={observerArticle.id} article={observerArticle.article}/>
             )
         })
     } else if(statusGAOA === 'succedded' && !observerArticles){
