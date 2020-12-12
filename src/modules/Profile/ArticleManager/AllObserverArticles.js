@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 
-import UserArticleService from '../../services/apis/user-article-service'
+import UserArticleService from '../../../services/apis/user-article-service'
 import ObserverArticleExcerpt from './ObserverArticleExcerpt'
 
 const AllObserverArticles = () => {

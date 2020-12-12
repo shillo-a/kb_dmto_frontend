@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import { Draggable } from 'react-beautiful-dnd'
 
-import DraftEditor from './DraftEditor'
+import DraftEditor from '../DraftEditor/DraftEditor'
 import DeleteSectionButton from './DeleteSectionButton'
 import { ArrowsMove } from 'react-bootstrap-icons';
 
-const Section = ({ dummyObesrver, section, index, deleteSectionHandler, changeSectionHeadHandler, changeSectionBodyHandler }) => {
+const SectionForm = ({ dummyObesrver, section, index, deleteSectionHandler, changeSectionHeadHandler, changeSectionBodyHandler }) => {
 
     return (
         
@@ -66,4 +66,4 @@ const Section = ({ dummyObesrver, section, index, deleteSectionHandler, changeSe
     )
 }
 
-export default Section
+export default SectionForm

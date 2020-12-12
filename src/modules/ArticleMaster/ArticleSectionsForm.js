@@ -1,7 +1,8 @@
 import React from 'react'
 import { Droppable } from 'react-beautiful-dnd'
 import { Button, Container } from 'react-bootstrap'
-import Section from '../Section/Section'
+
+import SectionForm from '../Section/SectionForm'
 
 const ArticleSectionsForm = ({ dummyObesrver, sections, deleteSectionHandler, changeSectionHeadHandler, changeSectionBodyHandler}) => {
 
@@ -9,7 +10,7 @@ const ArticleSectionsForm = ({ dummyObesrver, sections, deleteSectionHandler, ch
     if(sections){
         content = sections.map((section, index) =>{
             return(
-                <Section 
+                <SectionForm 
                     dummyObesrver={dummyObesrver}
                     key={index} 
                     index={index} 
@@ -17,7 +18,7 @@ const ArticleSectionsForm = ({ dummyObesrver, sections, deleteSectionHandler, ch
                     deleteSectionHandler={deleteSectionHandler}
                     changeSectionHeadHandler={changeSectionHeadHandler}
                     changeSectionBodyHandler={changeSectionBodyHandler}
-                ></Section>
+                ></SectionForm>
             )
         })
     } else {return null}

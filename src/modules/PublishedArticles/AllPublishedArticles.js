@@ -3,7 +3,7 @@ import { Container, Jumbotron, Spinner } from 'react-bootstrap'
 
 import CategoryService from '../../services/apis/category-service'
 import ArticleService from '../../services/apis/article-service'
-import PublishedArticleExcerpt from './PublishedArticleExcerpt'
+import ArticleExcerpt from '../Article/ArticleExcerpt'
 
 const AllPublishedArticles = ({ match }) => {
 
@@ -53,7 +53,7 @@ const AllPublishedArticles = ({ match }) => {
     } else if(statusGAPA === 'succedded' && publishedArticles){
         content = publishedArticles.map(publishedArticle => {
             return(
-                <PublishedArticleExcerpt key={publishedArticle.id} publishedArticle={publishedArticle}/>
+                <ArticleExcerpt key={publishedArticle.id} article={publishedArticle}/>
             )
         })
     } else if(statusGAPA === 'succedded' && !publishedArticles){

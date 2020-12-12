@@ -4,7 +4,10 @@ import { Button } from 'react-bootstrap'
 const AuthorArticleExcerpt = ({ authorArticle }) => {
 
     var availableButtons = <td align="center"></td>
-    if(authorArticle.article.statusArticle.id === 'draft'){
+    if(
+        authorArticle.article.statusArticle.id === 'draft' || 
+        authorArticle.article.statusArticle.id === 'decline'
+    ){
         availableButtons = (
             <React.Fragment>
                 <Button className="mr-2" size="sm">Редактировать</Button>
@@ -24,7 +27,7 @@ const AuthorArticleExcerpt = ({ authorArticle }) => {
             <td>{authorArticle.article.title}</td>
             <td>{authorArticle.article.category.category}</td>
             <td>{authorArticle.article.statusArticle.statusArticle}</td>
-            <td >{availableButtons}</td>
+            <td>{availableButtons}</td>
         </tr>
      
     )

@@ -128,7 +128,7 @@ const ArticleMaster = () => {
     const onDragEnd = (result) => {
         const { destination, source, draggableId } = result
 
-        // Выбросили drggable за зону droppable
+        // Выбросили draggable за зону droppable
         if(!destination){
             return
         }
@@ -196,6 +196,7 @@ const ArticleMaster = () => {
                 <Tab eventKey='preview' title='3. Предпросмотр'>
                     <ArticlePreview 
                         article={article}
+                        categoryId={article.categoryId}
                     />
                     <Button onClick={() => setKeyTab('save')}>Продолжить</Button>
                 </Tab>

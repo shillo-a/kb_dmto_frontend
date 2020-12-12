@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import './styles/DraftEditorView.css'
+import './styles/DraftEditorPreview.css'
 
-const DraftEditor = ({ sectionBody }) => {
+const DraftEditorPreview = ({ sectionBody }) => {
 
     const [editorState, setEditorState] = useState(() => {
         if(sectionBody){
             return EditorState.createWithContent(convertFromRaw(JSON.parse(sectionBody)))
+            
         } else {
             return EditorState.createEmpty()
         } 
@@ -63,4 +64,4 @@ const DraftEditor = ({ sectionBody }) => {
   )
 }
 
-export default DraftEditor
+export default DraftEditorPreview

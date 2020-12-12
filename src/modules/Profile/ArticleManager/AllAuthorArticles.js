@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 
-import UserArticleService from '../../services/apis/user-article-service'
+import UserArticleService from '../../../services/apis/user-article-service'
 import AuthorArticleExcerpt from './AuthorArticleExcerpt'
 
 const AllAuthorArticles = () => {
@@ -10,7 +10,7 @@ const AllAuthorArticles = () => {
 
     // GAAA - get all author articles
     const [statusGAAA, seStatusGAAA] = useState('idle')
-    const getAllAuthotArticles = () => {
+    const getAllAuthorArticles = () => {
         seStatusGAAA('loading')
         UserArticleService.getAllAuthorArticles()
             .then(response => {
@@ -24,7 +24,7 @@ const AllAuthorArticles = () => {
     }
 
     useEffect(()=>{
-        getAllAuthotArticles()
+        getAllAuthorArticles()
     }, [])
 
     var content = ''
@@ -33,9 +33,10 @@ const AllAuthorArticles = () => {
         tableContent = <Spinner animation="border" variant="primary" />
     } else if(statusGAAA === 'succedded' && authorArticles){
         content = authorArticles.map(authorArticle => {
-            return(
-                <AuthorArticleExcerpt key={authorArticle.id} authorArticle={authorArticle}/>
-            )
+            // Исключаем опубликованные статьи
+            if(authorArticle.article.statusArticle.id !== 'published'){
+            return(<AuthorArticleExcerpt key={authorArticle.id} authorArticle={authorArticle}/>)
+            }
         })
         tableContent = (
             <Table bordered>
@@ -55,8 +56,6 @@ const AllAuthorArticles = () => {
     } else if(statusGAAA === 'succedded' && !authorArticles){
         tableContent = <div>Проекты статей отсутствуют</div>
     }
-
-
 
     return (
         <React.Fragment>

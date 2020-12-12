@@ -6,8 +6,7 @@ import ArticleService from '../../services/apis/article-service'
 import TransformService from '../../services/transforms/article-transform'
 
 import FavoriteSign from './FavoriteSign';
-import Contents from './Contents'
-import PublishedArticleSections from './PublishedArticleSections';
+import Contents from '../Article/Contents'
 
 const PublishedArticle = ({ match }) => {
 
@@ -23,7 +22,6 @@ const PublishedArticle = ({ match }) => {
                     // НЕОБХОДИМО ТРАНСФОРМИРОВАТЬ ДАННЫЕ !!!
                     TransformService.convertFromRawArticle(response.data)
                 )
-                console.log(response.data)
                 setStatus('succedded')
             })
             .catch(error => {
@@ -53,7 +51,7 @@ const PublishedArticle = ({ match }) => {
             </Jumbotron>
             <Container>
                 <Contents sections={publishedArticle.sections}/>
-                <PublishedArticleSections />
+                {/* <PublishedArticleSections /> */}
             </Container>
         </React.Fragment>
     )

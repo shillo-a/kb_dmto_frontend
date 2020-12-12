@@ -16,7 +16,7 @@ const Profile = () => {
         <Tab eventKey='articleManager' title='Статьи'>
           <ProfileArcticleManager />
         </Tab>
-        <Tab eventKey='profileManager' title='Настройки'>
+        <Tab eventKey='profileSettings' title='Настройки'>
           {
             <div className='container'>
               <br></br>
@@ -53,7 +53,6 @@ const Profile = () => {
             <button className='m-3 btn btn-sm btn-primary'>Сменить пароль</button>
           </form>
             </div>
-            
           }
         </Tab>
       </Tabs>

@@ -1,23 +1,22 @@
 import React from 'react'
+import SectionPreview from '../Section/SectionPreview'
 
-const ContentPreview = ({ sections }) => {
+const ArticleSections = ({ sections }) => {
 
     var content = ''
     if(sections){
         content = sections.map((section, index) => {
             return (
-                <li key={index}> {section.head}</li>
+                <SectionPreview key={index} section={section}/>
             )
         })
     }
+
     return (
         <React.Fragment>
-            <h5>Оглавление</h5>
-            <ol>
-                {content}
-            </ol>
+            {content}
         </React.Fragment>
-        
     )
 }
-export default ContentPreview
+
+export default ArticleSections

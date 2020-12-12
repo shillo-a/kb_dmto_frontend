@@ -1,20 +1,45 @@
-import React from 'react'
-import { Button, Col, Container, Jumbotron, Row } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Container, Jumbotron } from 'react-bootstrap'
 
-import ArticleSectionsPreview from './ArticleSectionsPreview'
-import ContentPreview from './ContentPreview'
+import categoryService from '../../services/apis/category-service'
+
+import Contents from '../Article/Contents'
+import ArticleSections from '../ArticleSections/ArticleSections'
 
 
-const ArticlePreview = ({ article }) => {
+
+const ArticlePreview = ({ categoryId, article }) => {
+
+    const [category, setCategory] = useState('')
+
+    // GC - get category
+    const [statusGC, setStatusGC] = useState('idle')
+    const getCategory = (categoryId) => {
+        setStatusGC('loading')
+        categoryService.getCategory(categoryId)
+            .then(response => {
+                setCategory(response.data)
+                setStatusGC('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusGC('failed')
+            })
+    }
+    
+    useEffect(()=>{
+        getCategory(categoryId)
+    }, [categoryId])
+
     return (
         <Container className="mt-3">
             <Jumbotron>
                 <h3>{article.title}</h3>
-                <span>{article.categoryId}</span>
+                <span>{category.category}</span>
             </Jumbotron>
             <Container>
-                <ContentPreview sections={article.sections}/>
-                <ArticleSectionsPreview sections={article.sections}/>
+                <Contents sections={article.sections}/>
+                <ArticleSections sections={article.sections}/>
             </Container>
         </Container>
     )

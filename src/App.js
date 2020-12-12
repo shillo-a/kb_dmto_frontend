@@ -12,8 +12,8 @@ import Login from '../src/modules/Authorization/Login';
 import Home from '../src/modules/Home/Home';
 import Profile from '../src/modules/Profile/Profile';
 
-import AllPublishedArticles from '../src/modules/Article/AllPublishedArticles';
-import PublishedArticle from '../src/modules/Article/PublishedArticle';
+import AllPublishedArticles from '../src/modules/PublishedArticles/AllPublishedArticles';
+import PublishedArticle from '../src/modules/PublishedArticles/PublishedArticle';
 import ArticleMaster from '../src/modules/ArticleMaster/ArticleMaster';
 
 const App = () => {
