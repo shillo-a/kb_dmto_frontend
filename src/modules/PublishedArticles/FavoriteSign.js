@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap';
-import { BookmarkPlus, BookmarkCheckFill} from 'react-bootstrap-icons';
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { BookmarkPlus, BookmarkCheckFill, CheckCircleFill} from 'react-bootstrap-icons';
 
 import UserArticleService from '../../services/apis/user-article-service';
 
@@ -68,10 +68,23 @@ const FavoriteSign = ({ articleId }) => {
 
     var favoriteSign = ''
     if(articleIsFavorite){
-        favoriteSign = <Button variant="link" onClick={removeFromFavoriteHandler}><BookmarkCheckFill size={30}/></Button>
+        favoriteSign = 
+        <OverlayTrigger placement="top" delay={{ show: 100, hide: 100 }} overlay={<Tooltip id="button-tooltip">Убрать из избранного</Tooltip>}>
+            <Button variant="link" onClick={removeFromFavoriteHandler}>
+                <BookmarkCheckFill size={30}/>
+            </Button>
+        </OverlayTrigger>
     } else {
-        favoriteSign = <Button variant="link" onClick={addToFavoriteHandler}><BookmarkPlus size={30}/></Button>
+        favoriteSign = 
+        <OverlayTrigger placement="top" delay={{ show: 100, hide: 100 }} overlay={<Tooltip id="button-tooltip">Добавить в избранное</Tooltip>}>
+            <Button variant="link" onClick={addToFavoriteHandler}>
+                <BookmarkPlus size={30}/>
+            </Button>
+        </OverlayTrigger>
     }
+
+    //Дополнительная кнопка, если статья является твоей
+    //<Button variant="link"><CheckCircleFill size={30}/></Button>
 
     return (
         <div>

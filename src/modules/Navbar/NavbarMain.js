@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Dropdown, Nav, Navbar, NavItem, NavLink } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FileEarmarkPlus, PlusSquare } from 'react-bootstrap-icons';
+import { Link, useHistory } from 'react-router-dom';
+import { PlusSquare } from 'react-bootstrap-icons';
 
 import './style/navbar.css'
 
 import AuthService from '../../services/apis/auth-service';
 
-const NavbarMain = () => {
-    
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showOwnerBoard, setShowOwnerBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
-    
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
-        
-        if (user) {
-          setCurrentUser(user);
-          setShowModeratorBoard(user.roles.includes('ROLE_MODERATOR'));
-          setShowOwnerBoard(user.roles.includes('ROLE_OWNER'));
-        }}, []);
-    
+const NavbarMain = ({ currentUser, permissions }) => {
+
+    const history = useHistory()
+    const linkSelectHandler = (pathname) => {
+        history.push(pathname)
+    }
+
     const logOut = () => {
         AuthService.logout();
     };
@@ -34,7 +26,7 @@ const NavbarMain = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           
-          {currentUser ? (
+          {permissions.isAuthenticated ? (
             <Nav>
 
             <Dropdown as={NavItem}>
@@ -42,7 +34,7 @@ const NavbarMain = () => {
                     <PlusSquare size={25}/>
                 </Dropdown.Toggle>
                 <Dropdown.Menu alignRight>
-                    <Dropdown.Item href="/articlemaster">Создать статью</Dropdown.Item>
+                    <Dropdown.Item href='/article-master'>Создать статью</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -51,7 +43,14 @@ const NavbarMain = () => {
                     {currentUser.username}
                 </Dropdown.Toggle>
                 <Dropdown.Menu alignRight>
-                    <Dropdown.Item href="/profile">Личный кабинет</Dropdown.Item>
+                    {permissions.isAdministrator?
+                        <Dropdown.Item onClick={() => {linkSelectHandler('/admin')}}>Панель администратора</Dropdown.Item>
+                    :<></>}
+                    {permissions.isModerator?
+                        <Dropdown.Item onClick={() => {linkSelectHandler('/profile/moderation')}}>На модерации</Dropdown.Item>
+                    :<></>}
+                    <Dropdown.Item onClick={() => {linkSelectHandler('/profile/articles')}}>Мои статьи</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {linkSelectHandler('/profile/settings')}}>Настройки</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item href="/login" onClick={logOut}>Выйти</Dropdown.Item>
                 </Dropdown.Menu>
@@ -59,7 +58,7 @@ const NavbarMain = () => {
             
 
             </Nav>
-          ):(null)}
+          ):<>/</>}
 
         </Navbar.Collapse>
 

@@ -2,32 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import './styles/DraftEditor.css'
+import './styles/DraftEditorPreview.css'
 
-const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandler }) => {
+const DraftEditorCommentPreview = ({ commentBody }) => {
 
     const [editorState, setEditorState] = useState(() => {
-        if(sectionBody){
-            return EditorState.createWithContent(convertFromRaw(JSON.parse(sectionBody)))
+        if(commentBody){
+            return EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody)))
         } else {
             return EditorState.createEmpty()
         } 
         })
     
-    //Каждый раз при перемещении секции, ререндерим ее
-    useEffect(()=>{
-        if(sectionBody){
-            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(sectionBody))))
-        } else {
-            setEditorState(EditorState.createEmpty())
-        } 
-    }, [dummyObesrver])
-        
     const editorStateChangeHandler = (editorState) => {
-        setEditorState(editorState)
-        changeSectionBodyHandler(
-            JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
-        )
+        // setEditorState(editorState)
+        // changeSectionBodyHandler(
+        //     JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
+        // )
     }
     
     const getFileBase64 = (file, callback) => {
@@ -45,17 +36,16 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
 
     return (
         <Editor 
-            // readOnly
-            // toolbarHidden
-            
+            readOnly
+            toolbarHidden
             editorState={editorState}
             onEditorStateChange={editorStateChangeHandler}
-                wrapperClassName="wrapper-class"
-                editorClassName="editor-class"
-                toolbarClassName="toolbar-class"
+                wrapperClassName="wrapper-view-class"
+                editorClassName="editor-view-class"
+                toolbarClassName="toolbar-view-class"
 
                 toolbar={{
-                    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'image', 'remove', 'history'],
+                    options: ['inline', 'colorPicker', 'link', 'emoji'],
                     image: {
                         
                         uploadCallback: imageUploadCallback,
@@ -70,4 +60,4 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
   )
 }
 
-export default DraftEditor
+export default DraftEditorCommentPreview

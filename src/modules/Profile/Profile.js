@@ -1,63 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Jumbotron, Tab, Tabs } from 'react-bootstrap';
+import Switch from 'react-bootstrap/esm/Switch';
+import { Redirect, Route, useHistory } from 'react-router-dom';
 
-import AuthService from '../../services/apis/auth-service';
-import ProfileArticleManager from './ProfileArticleManager';
+import ProfileArticleManager from '../ProfileArticleManager/ProfileArticleManager';
+import ProfileArticleModeration from '../ProfileArticleModeration/ProfileArticleModeration';
+import ProfileSettings from './ProfileSettings';
 
-const Profile = () => {
-  const currentUser = AuthService.getCurrentUser();
+const Profile = ({ match, location, currentUser, permissions }) => {
+
+    const { path } = match;
+
+    //Куда был выполнен вход (подсветка таба)
+    const [key, setKey] = useState(location)
+
+    //Определяем по какой ссылки зашёл пользователь для подсветки tab-a
+    useEffect(()=>{
+        setKey(location.pathname)
+    }, [location])
+
+  //Определяем внутри профиля на какую ссылку необходимо осуществить переход
+  const history = useHistory()
+  useEffect(()=>{
+      if (key === `${path}/moderation`){history.push(`${path}/moderation`)} 
+      else if(key === `${path}/articles`){history.push(`${path}/articles`)} 
+      else if(key === `${path}/settings`){history.push(`${path}/settings`)}
+  }, [key])
 
   return (
     <React.Fragment>
-      <Jumbotron>
-        <h3>Здравствуйте, {currentUser.username} !</h3>
-      </Jumbotron>
 
-      <Tabs defaultActiveKey='articleManager' id='profile' className="justify-content-center">
-        <Tab eventKey='moderator' title='Проверка статей'></Tab>
-        <Tab eventKey='articleManager' title='Мои статьи'>
-          <ProfileArticleManager />
-        </Tab>
-        <Tab eventKey='profileSettings' title='Настройки'>
-          {
-            <div className='container'>
-              <br></br>
-              <p>
-                <strong>Логин:</strong> {currentUser.username}
-              </p>
-              <p>
-                <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)}{' '}
-                ...{' '}
-                {currentUser.accessToken.substr(
-                  currentUser.accessToken.length - 20
-                )}
-              </p>
-              <p>
-                <strong>Id:</strong> {currentUser.id}
-              </p>
-              <p>
-                <strong>Email:</strong> {currentUser.email}
-              </p>
-              <strong>Роли:</strong>
-              <ul>
-                {currentUser.roles &&
-                  currentUser.roles.map((role, index) => (
-                    <li key={index}>{role}</li>
-                  ))}
-              </ul>
+        <Jumbotron>
+            <h3>Здравствуйте, {currentUser.username} !</h3>
+        </Jumbotron>
 
-              <form action='' target='_blank'>
-                <button className='m-3 btn btn-sm btn-primary'>
-                  Сменить аватар
-                </button>
-              </form>
-              <form action='' target='_blank'>
-            <button className='m-3 btn btn-sm btn-primary'>Сменить пароль</button>
-          </form>
-            </div>
-          }
-        </Tab>
-      </Tabs>
+        <Tabs activeKey={key} onSelect={(k) => setKey(k)} className="justify-content-center">
+            {permissions.isModerator ? <Tab eventKey={`${path}/moderation`} title='На модерации'></Tab> : <></>}
+            <Tab eventKey={`${path}/articles`} title='Мои статьи'></Tab>
+            <Tab eventKey={`${path}/settings`} title='Настройки'></Tab>
+        </Tabs>
+
+        <div className="tabs">
+            <Switch>
+                <Route path={`${path}/moderation`} render={(props) => permissions.isAuthenticated&&permissions.isModerator?(<ProfileArticleModeration {...props}/>):(<Redirect to='/home'/>)}/>
+                <Route path={`${path}/articles`} component={ProfileArticleManager}/>
+                <Route path={`${path}/settings`} component={ProfileSettings}/>
+            </Switch>
+        </div>
 
     </React.Fragment>
 

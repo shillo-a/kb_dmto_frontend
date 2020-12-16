@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import './styles/DraftEditor.css'
+import './styles/DraftEditorComment.css'
 
-const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandler }) => {
+const DraftEditorComment = ({ dummyObesrver, commentBody,  changeCommentBodyHandler}) => {
 
     const [editorState, setEditorState] = useState(() => {
-        if(sectionBody){
-            return EditorState.createWithContent(convertFromRaw(JSON.parse(sectionBody)))
+        if(commentBody){
+            return EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody)))
         } else {
             return EditorState.createEmpty()
         } 
@@ -16,18 +16,20 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
     
     //Каждый раз при перемещении секции, ререндерим ее
     useEffect(()=>{
-        if(sectionBody){
-            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(sectionBody))))
+        if(commentBody){
+            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody))))
         } else {
             setEditorState(EditorState.createEmpty())
         } 
-    }, [dummyObesrver])
+    }, [
+        // dummyObesrver
+    ])
         
     const editorStateChangeHandler = (editorState) => {
         setEditorState(editorState)
-        changeSectionBodyHandler(
-            JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
-        )
+        // changeSectionBodyHandler(
+        //     JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
+        // )
     }
     
     const getFileBase64 = (file, callback) => {
@@ -47,7 +49,6 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
         <Editor 
             // readOnly
             // toolbarHidden
-            
             editorState={editorState}
             onEditorStateChange={editorStateChangeHandler}
                 wrapperClassName="wrapper-class"
@@ -55,7 +56,7 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
                 toolbarClassName="toolbar-class"
 
                 toolbar={{
-                    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'image', 'remove', 'history'],
+                    options: ['inline', 'colorPicker', 'link', 'emoji'],
                     image: {
                         
                         uploadCallback: imageUploadCallback,
@@ -70,4 +71,4 @@ const DraftEditor = ({ dummyObesrver, sectionBody, index, changeSectionBodyHandl
   )
 }
 
-export default DraftEditor
+export default DraftEditorComment

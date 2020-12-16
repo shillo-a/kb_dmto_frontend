@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Container, Nav, Tab } from 'react-bootstrap'
 
-import AllAuthorArticles from '../ArticleManager/AllAuthorArticles'
-import AllObserverArticles from '../ArticleManager/AllObserverArticles'
-import AllPublishedAuthorArticles from '../ArticleManager/AllPublishedAuthorArticles'
+import AllAuthorArticles from './AllAuthorArticles'
+import AllObserverArticles from './AllObserverArticles'
+import AllPublishedAuthorArticles from './AllPublishedAuthorArticles'
 
 const ProfileArticleManager = () => {
 
     return (
         <Container className="pt-3">
-
             <Tab.Container defaultActiveKey='inwork'>
                 <Nav variant="pills">
                     <Nav.Item><Nav.Link eventKey="inwork">В работе</Nav.Link></Nav.Item>

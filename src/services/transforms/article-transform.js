@@ -16,7 +16,12 @@ const convertFromRawArticle = (startData) => {
     const finishData = {
         articleId: articleId,
         title: title,
-        sections: sections
+        sections: sections,
+        
+        // НЕ ХВАТАЕТ ИНФОРМАЦИИ В backend
+        status: {id:'draft', statusArticle:'Черновик'}, //draft consider decline publiched archive?
+        categoryId: 4,
+        article_base_id: 0
     }
 
     return finishData

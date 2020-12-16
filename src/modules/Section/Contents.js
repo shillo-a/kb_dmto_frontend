@@ -1,4 +1,5 @@
 import React from 'react'
+import { HashLink } from 'react-router-hash-link';
 
 const Contents = ({ sections }) => {
 
@@ -6,7 +7,13 @@ const Contents = ({ sections }) => {
     if(sections){
         content = sections.map((section, index) => {
             return (
-                <li key={index}> {section.head}</li>
+                
+                <HashLink 
+                    key={index} 
+                    className="text-dark"
+                    smooth to={'#'+section.head}>
+                    <li>{section.head}</li>
+                </HashLink>
             )
         })
     }

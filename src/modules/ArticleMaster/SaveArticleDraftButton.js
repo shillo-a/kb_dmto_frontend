@@ -5,8 +5,9 @@ import ArticleService from '../../services/apis/article-service'
 import SectionService from '../../services/apis/section-service'
 import TransformService from '../../services/transforms/section-transform'
 
-const SaveArticleDraftButton = ({ article, articleId, addArticleId }) => {
+const SaveArticleDraftButton = ({ article, articleId, addArticleId, saveType}) => {
 
+    const [saveStatus, setSaveStatus] = useState('')
     //CA - create article (without sections)
     const [statusCA, setStatusCA] = useState('idle')
     const saveArticle = (article) => {
@@ -23,7 +24,6 @@ const SaveArticleDraftButton = ({ article, articleId, addArticleId }) => {
             })
     }
 
-
     //ASTA - add sections to article
     const [statusASTA, setStatusASTA] = useState('idle')
     const addSectionsToArticle = (articleId, sections) => {
@@ -38,29 +38,29 @@ const SaveArticleDraftButton = ({ article, articleId, addArticleId }) => {
             })
     }
 
-    //создаем статью только если нет articleId
+    //создаем статью только если saveType==="save"
     const saveArticleHandler = (event) =>{
-        if(!articleId){
+        if(saveType.type==="save"){
             saveArticle(article)
-        }   
+        } else if (saveType.type==="update"){
+            console.log('Обновление статьи')
+        }
     }
 
-    //если появился articleId сохраняем
+    //если статья была успешно создана, то сохраняем к ней секции
     useEffect(()=>{
-        if(articleId){
+        if(statusCA === 'succedded'){
             addSectionsToArticle(
                 articleId, 
                 //Преобразуем текст c JSON в string JSON
                 TransformService.convertSectionBodyToJsonString(article.sections)
             )
         }
-    }, [articleId])
+    }, [statusCA])
 
     return (
         <React.Fragment>
-            {/* {console.log(JSON.stringify(article.sections[0].body))}
-            {console.log(article.sections[0].body)} */}
-            <Button onClick={saveArticleHandler}>Сохранить</Button>
+            <Button onClick={saveArticleHandler} className="mr-2">Сохранить</Button>
         </React.Fragment>
     )
 }

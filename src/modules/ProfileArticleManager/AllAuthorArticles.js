@@ -42,10 +42,9 @@ const AllAuthorArticles = () => {
             <Table bordered>
                 <thead>
                     <tr>
-                    <th>Название</th>
-                    <th>Тип статьи</th>
-                    <th>Статус</th>
-                    <th>Управление</th>
+                        <th>Название</th>
+                        <th>Тип статьи</th>
+                        <th>Статус</th>
                     </tr>
                 </thead>
                 <tbody>

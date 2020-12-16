@@ -14,7 +14,7 @@ const Category = ({ category }) => {
 
     return (
         <Col className="col-xs-1 col-md-4 d-flex align-items-stretch">
-            <Card className="text-center category-card shadow rounded">
+            <Card className="text-center category-card shadow-sm">
                 <Card.Body className="category-body">
                     <Card.Title>{category.category}</Card.Title>
                     <Card.Text>{category.description}</Card.Text>

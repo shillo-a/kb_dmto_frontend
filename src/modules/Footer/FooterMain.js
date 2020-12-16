@@ -4,7 +4,7 @@ import './styles/footerMain.css'
 
 const FooterMain = () => {
     return (
-        <footer className="footer">we</footer>
+        <div className="footer"></div>
     )
 }
 

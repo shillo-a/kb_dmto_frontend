@@ -1,11 +1,26 @@
-import React from 'react'
+import React from 'react';
+import { Jumbotron, Tab, Tabs } from 'react-bootstrap';
+
 import AuthService from '../../services/apis/auth-service';
+import ProfileArticleManager from './ProfileArticleManager';
 
-const ProfileSettings = () => {
-    const currentUser = AuthService.getCurrentUser();
+const Profile = () => {
+  const currentUser = AuthService.getCurrentUser();
 
-    return (
-        <div className='container'>
+  return (
+    <React.Fragment>
+      <Jumbotron>
+        <h3>Здравствуйте, {currentUser.username} !</h3>
+      </Jumbotron>
+
+      <Tabs defaultActiveKey='articleManager' id='profile' className="justify-content-center">
+        <Tab eventKey='moderator' title='Проверка статей'></Tab>
+        <Tab eventKey='articleManager' title='Мои статьи'>
+          <ProfileArticleManager />
+        </Tab>
+        <Tab eventKey='profileSettings' title='Настройки'>
+          {
+            <div className='container'>
               <br></br>
               <p>
                 <strong>Логин:</strong> {currentUser.username}
@@ -40,7 +55,13 @@ const ProfileSettings = () => {
             <button className='m-3 btn btn-sm btn-primary'>Сменить пароль</button>
           </form>
             </div>
-    )
-}
+          }
+        </Tab>
+      </Tabs>
 
-export default ProfileSettings
+    </React.Fragment>
+
+  );
+};
+
+export default Profile;

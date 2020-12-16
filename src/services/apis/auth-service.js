@@ -19,7 +19,10 @@ const logout = () => {
 }
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"))
+
+    //добавить проверку на активность текущего токена!!!
+    //если токен не активен возвращать - ''
+    return JSON.parse(localStorage.getItem("user"))
 };
 
 export default {

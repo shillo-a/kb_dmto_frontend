@@ -28,7 +28,9 @@ const ArticlePreview = ({ categoryId, article }) => {
     }
     
     useEffect(()=>{
-        getCategory(categoryId)
+        if(categoryId){
+            getCategory(categoryId)
+        }
     }, [categoryId])
 
     return (

@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap'
 
 import CategoryService from '../../services/apis/category-service'
 
-const ArticleHeaderForm = ({ changeTitleHandler, changeCategoryHandler }) => {
+const ArticleHeaderForm = ({ title, categoryId, changeTitleHandler, changeCategoryHandler }) => {
 
     const [categories, setCategories] = useState('')
 
@@ -32,7 +32,7 @@ const ArticleHeaderForm = ({ changeTitleHandler, changeCategoryHandler }) => {
     if (!categories){
         return (<option></option>)
     } else { options = categories.map((category)=>{
-            return(<option key={category.id} data-key={category.id}>{category.category}</option>)
+            return(<option key={category.id} data-key={category.id} value={category.id}>{category.category}</option>)
         })
     }
 
@@ -40,11 +40,11 @@ const ArticleHeaderForm = ({ changeTitleHandler, changeCategoryHandler }) => {
         <Form>
             <Form.Group controlId="articleHeader">
                 <Form.Label>Название статьи:</Form.Label>
-                <Form.Control type="text" placeholder="Укажите название статьи" onChange={changeTitleHandler}/>
+                <Form.Control type="text" placeholder="Укажите название статьи" onChange={changeTitleHandler} value={title ? title : ''}/>
             </Form.Group>
             <Form.Group controlId="category">
                 <Form.Label>Тип статьи:</Form.Label>
-                <Form.Control as="select" onChange={changeCategoryHandler} defaultValue={'default'}>
+                <Form.Control as="select" onChange={changeCategoryHandler} value={categoryId}>
                     <option value="default" disabled >Выберите тип статьи</option>
                     {options}
                 </Form.Control>
