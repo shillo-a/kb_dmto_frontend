@@ -2,6 +2,8 @@ body{ min-height:100vh; margin:0; position:relative; }
 
 body {
   position: relative;
+  /* Модальные окна bootstrap делают paddin 19px*/
+  padding-right: 0 !important; 
 }
 
 body::after {

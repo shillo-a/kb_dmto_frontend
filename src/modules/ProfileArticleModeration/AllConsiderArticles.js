@@ -1,19 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
+import ArticleService from '../../services/apis/article-service'
 import ConsiderArticleExcerpt from './ConsiderArticleExcerpt'
 
 const AllConsiderArticles = () => {
 
-    const [considerArticles, setConsiderArticles] = useState(
-        [
-            {id: 1, title: "Статья для проверки 1", category: 'Материалы'},
-            {id: 2, title: "Статья для проверки 2", category: 'Материалы'},
-            {id: 3, title: "Статья для проверки 3", category: 'Материалы'}
-        ]
-    )
+    const [considerArticles, setConsiderArticles] = useState('')
 
     // GACA - get all consider articles
-    const [statusGACA, setstatusGACA] = useState('succedded')
+    const [statusGACA, setstatusGACA] = useState('idle')
+    const getAllConsiderArticles = () => {
+        setstatusGACA('loading')
+        ArticleService.getAllConsiderArticles()
+            .then(response => {
+                setConsiderArticles(response.data)
+                setstatusGACA('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setstatusGACA('failed')
+            })
+    }
+
+    useEffect(()=>{
+        getAllConsiderArticles()
+    }, [])
 
     var content = ''
     var tableContent = ''

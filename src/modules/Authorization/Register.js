@@ -1,174 +1,191 @@
-import React, { useState, useRef } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
+import React, { useState } from 'react'
+import { Row, Col, Form, Container, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
 import AuthService from "../../services/apis/auth-service";
+import './styles/Register.css'
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Данное поле обязательно !
-      </div>
-    );
-  }
-};
+const Login = () => {
 
-const validEmail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Неверный формта email.
-      </div>
-    );
-  }
-};
-
-const vusername = (value) => {
-  if (value.length < 6 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Имя пользователя должно состоять не менее чем 6 и не более 20 символов.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Пароль должен быть не менее 6 и не более 40 символов.
-      </div>
-    );
-  }
-};
-
-const Register = (props) => {
-  const form = useRef();
-  const checkBtn = useRef();
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [successful, setSuccessful] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
-
-  const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email);
-  };
-
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-
-    setMessage("");
-    setSuccessful(false);
-
-    form.current.validateAll();
-
-    if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
-        (response) => {
-          setMessage(response.data.message);
-          setSuccessful(true);
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          setMessage(resMessage);
-          setSuccessful(false);
-        }
-      );
+    const history = useHistory()
+    // R - register
+    const [statusR, setStatusR] = useState('')
+    const register = (username, email, lastName, firstName, middleName, roleAdmin, roleModerator, password) => {
+        setStatusR('loading')
+        AuthService.register(username, email, lastName, firstName, middleName, roleAdmin, roleModerator, password)
+            .then(response => {
+                console.log(response)
+                setStatusR('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusR('failed')
+            })
     }
-  };
 
-  return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [middleName, setMiddleName] = useState('')
 
-        <Form onSubmit={handleRegister} ref={form}>
-          {!successful && (
-            <div>
-              <div className="form-group">
-                <label htmlFor="username">Логин</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="username"
-                  value={username}
-                  onChange={onChangeUsername}
-                  validations={[required, vusername]}
-                />
-              </div>
+    const [password, setPassword] = useState('')
+    const [roleAdmin, setRoleAdmin] = useState(false)
+    const [roleModerator, setRoleModerator] = useState(false)
+    
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={onChangeEmail}
-                  validations={[required, validEmail]}
-                />
-              </div>
+    const onChangeUsername = (e) => {
+        const username = e.target.value
+        setUsername(username)
+    }
 
-              <div className="form-group">
-                <label htmlFor="password">Пароль</label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={onChangePassword}
-                  validations={[required, vpassword]}
-                />
-              </div>
+    const onChangeEmail = (e) => {
+        const email = e.target.value
+        setEmail(email)
+    }
 
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Регистрация</button>
-              </div>
-            </div>
-          )}
+    const onChangeLastName = (e) => {
+        const lastName = e.target.value
+        setLastName(lastName)
+    }
 
-          {message && (
-            <div className="form-group">
-              <div
-                className={ successful ? "alert alert-success" : "alert alert-danger" }
-                role="alert"
-              >
-                {message}
-              </div>
-            </div>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
-      </div>
-    </div>
-  );
-};
+    const onChangeFirstName = (e) => {
+        const firstName = e.target.value
+        setFirstName(firstName)
+    }
 
-export default Register;
+    const onChangeMiddleName = (e) => {
+        const middleName = e.target.value
+        setMiddleName(middleName)
+    }
+
+    const onChangeRoleAdmin = (e) => {
+        const roleAdmin = e.target.checked
+        setRoleAdmin(roleAdmin)
+    }
+
+    const onChangeRoleModerator = (e) => {
+        const roleModerator = e.target.checked
+        setRoleModerator(roleModerator)
+    }
+
+    const onChangePassword = (e) => {
+        const password = e.target.value
+        setPassword(password)
+    }
+
+    const handleRegister = (e) => {
+        e.preventDefault()
+        register(username, email, lastName, firstName, middleName, roleAdmin, roleModerator, password)
+    }
+
+    return (
+        <Container className="border shadow-sm p-5 mt-5 register-form" >
+            <h5>Новый пользователь</h5>
+            <hr/>
+            <Form onSubmit={handleRegister} >
+                <Container className="text-right">
+
+                    <Form.Group as={Row} controlId="username" >
+                        <Form.Label column sm={2}>Логин:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Введите логин" 
+                                value={username}
+                                onChange={onChangeUsername}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="email" >
+                        <Form.Label column sm={2}>Почта:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="email" 
+                                placeholder="Введите почту" 
+                                value={email}
+                                onChange={onChangeEmail}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="lastname">
+                        <Form.Label column sm={2}>Фамилия:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Введите фамилию" 
+                                value={lastName}
+                                onChange={onChangeLastName}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="firstname">
+                        <Form.Label column sm={2}>Имя:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Введите имя" 
+                                value={firstName}
+                                onChange={onChangeFirstName}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="middlename">
+                        <Form.Label column sm={2}>Отчество:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Введите отчество" 
+                                value={middleName}
+                                onChange={onChangeMiddleName}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="password">
+                        <Form.Label column sm={2}>Пароль:</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control 
+                                type="password" 
+                                placeholder="Введите пароль" 
+                                value={password}
+                                onChange={onChangePassword}
+                                autoComplete="off"
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="roleSelect">
+                        <Form.Label column sm={2}>Роли:</Form.Label>
+                        <Col sm={10} className="text-left">
+                            <Form.Check 
+                                type="checkbox" 
+                                id="1" 
+                                label="Администратор"
+                                checked={roleAdmin}
+                                onChange={onChangeRoleAdmin}
+                            />
+                            <Form.Check 
+                                type="checkbox" 
+                                id="2" 
+                                label="Модератор" 
+                                checked={roleModerator}
+                                onChange={onChangeRoleModerator}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                </Container>
+                <Container className="text-center">
+                    <Button variant="primary" type="submit">Создать</Button>
+                </Container>
+            </Form>
+        </Container>
+    )
+}
+
+export default Login

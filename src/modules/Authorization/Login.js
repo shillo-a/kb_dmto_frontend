@@ -1,126 +1,83 @@
-import React, { useState, useRef } from 'react';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import CheckButton from 'react-validation/build/button';
+import React, { useState } from 'react'
+import { Row, Col, Form, Container, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+
 import './styles/Login.css'
+import AuthService from '../../services/apis/auth-service'
 
-import AuthService from '../../services/apis/auth-service';
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className='alert alert-danger' role='alert'>
-        Обязательное поле!
-      </div>
-    );
-  }
-};
+const Login = () => {
 
-const Login = (props) => {
-  const form = useRef();
-  const checkBtn = useRef();
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
-
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    setMessage('');
-    setLoading(true);
-
-    form.current.validateAll();
-
-    if (checkBtn.current.context._errors.length === 0) {
-      AuthService.login(username, password).then(
-        () => {
-          props.history.push('/home');
-          window.location.reload();
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          setLoading(false);
-          setMessage(resMessage);
-        }
-      );
-    } else {
-      setLoading(false);
+    const history = useHistory()
+    // LI - login
+    const [statusLI, setStatusLI] = useState('')
+    const login = (username, password) => {
+        setStatusLI('loading')
+        AuthService.login(username, password)
+            .then(response => {
+                // Не надо, так как работают редиректы
+                // history.push('/home')
+                window.location.reload()
+                setStatusLI('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusLI('failed')
+            })
     }
-  };
 
-  return (
-    <div className='col-md-12'>
-      <div className='card card-container'>
-        <img
-          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
-          alt='profile-img'
-          className='profile-img-card'
-        />
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-        <Form onSubmit={handleLogin} ref={form}>
-          <div className='form-group'>
-            <label htmlFor='username'>Логин</label>
-            <Input
-              type='text'
-              className='form-control'
-              name='username'
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
-          </div>
+    const onChangeUsername = (e) => {
+        const username = e.target.value
+        setUsername(username)
+    }
 
-          <div className='form-group'>
-            <label htmlFor='password'>Пароль</label>
-            <Input
-              type='password'
-              className='form-control'
-              name='password'
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </div>
+    const onChangePassword = (e) => {
+        const password = e.target.value
+        setPassword(password)
+    }
 
-          <div className='form-group'>
-            <button className='btn btn-primary btn-block' disabled={loading}>
-              {loading && (
-                <span className='spinner-border spinner-border-sm'></span>
-              )}
-              <span>Вход</span>
-            </button>
-          </div>
+    const handleLogin = (e) => {
+        e.preventDefault()
+        login(username, password)
+    }
 
-          {message && (
-            <div className='form-group'>
-              <div className='alert alert-danger' role='alert'>
-                {message}
-              </div>
-            </div>
-          )}
-          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-        </Form>
-      </div>
-    </div>
-  );
-};
+    return (
+        <Container className="text-center border shadow p-5 mt-5 login-form" >
+            <h5>База знаний категорийных стратегий Топливной компании</h5>
+            <hr/>
+            <Form onSubmit={handleLogin}>
+                <Form.Group as={Row} controlId="username">
+                    <Form.Label column sm={2}>Логин:</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control 
+                            type="text" 
+                            placeholder="Введите логин" 
+                            value={username}
+                            onChange={onChangeUsername}
+                        />
+                    </Col>
+                </Form.Group>
 
-export default Login;
+                <Form.Group as={Row} controlId="password">
+                    <Form.Label column sm={2}>Пароль:</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control 
+                            type="password" 
+                            placeholder="Введите пароль" 
+                            value={password}
+                            onChange={onChangePassword}
+                            autoComplete="off"
+                        />
+                    </Col>
+                </Form.Group>
+
+                <Button variant="primary" type="submit">Войти</Button>
+            </Form>
+        </Container>
+    )
+}
+
+export default Login

@@ -11,16 +11,18 @@ const convertFromRawArticle = (startData) => {
     // Выбираем первые значения из array
     const articleId = startData[0].id
     const title = startData[0].title
-
+    const categoryId = startData[0].categoryId.id
+    const status = {id: startData[0].statusArticleId.id, statusArticle: startData[0].statusArticleId.statusArticle}
+    const user = {id: startData[0].userId.id}
     // Формируем новый объект
     const finishData = {
         articleId: articleId,
         title: title,
         sections: sections,
-        
+        categoryId: categoryId,
+        status: status, //draft consider decline publiched archive?
+        user: user,
         // НЕ ХВАТАЕТ ИНФОРМАЦИИ В backend
-        status: {id:'draft', statusArticle:'Черновик'}, //draft consider decline publiched archive?
-        categoryId: 4,
         article_base_id: 0
     }
 

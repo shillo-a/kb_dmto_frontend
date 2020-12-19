@@ -11,6 +11,7 @@ import ArticleHeaderForm from './ArticleHeaderForm';
 import ArticlePreview from '../ArticlePreview/ArticlePreview';
 import ArticleSectionsForm from './ArticleSectionsForm'
 import SaveArticleDraftButton from './SaveArticleDraftButton';
+import CancelButton from './CancelButton';
 
 
 const ArticleMaster = ({ match }) => {
@@ -45,6 +46,7 @@ const ArticleMaster = ({ match }) => {
         setStatusGA('loading')
         ArticleService.getArticle(articleId)
             .then(response => {
+                console.log(response.data)
                 setBaseArticle(
                     // НЕОБХОДИМО ТРАНСФОРМИРОВАТЬ ДАННЫЕ !!!
                     ArticleTransform.convertFromRawArticle(response.data)
@@ -270,10 +272,11 @@ const ArticleMaster = ({ match }) => {
                             addArticleId={addArticleId}
                             saveType={saveType}
                         />
-                        <Button onClick={()=>{console.log('Отменить')}}>Отменить</Button>
+                        <CancelButton/>
                     </Container>
                 </Tab>
             </Tabs>
+            {console.log(article)}
         </React.Fragment>
     )
 }

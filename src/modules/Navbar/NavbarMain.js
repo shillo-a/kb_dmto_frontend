@@ -27,7 +27,7 @@ const NavbarMain = ({ currentUser, permissions }) => {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           
           {permissions.isAuthenticated ? (
-            <Nav>
+            <Nav className='main-nav'>
 
             <Dropdown as={NavItem}>
                 <Dropdown.Toggle as={NavLink} id="dropdownProfile">
@@ -42,7 +42,7 @@ const NavbarMain = ({ currentUser, permissions }) => {
                 <Dropdown.Toggle as={NavLink} id="dropdownProfile">
                     {currentUser.username}
                 </Dropdown.Toggle>
-                <Dropdown.Menu alignRight>
+                <Dropdown.Menu alignRight >
                     {permissions.isAdministrator?
                         <Dropdown.Item onClick={() => {linkSelectHandler('/admin')}}>Панель администратора</Dropdown.Item>
                     :<></>}

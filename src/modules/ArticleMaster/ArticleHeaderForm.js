@@ -44,7 +44,7 @@ const ArticleHeaderForm = ({ title, categoryId, changeTitleHandler, changeCatego
             </Form.Group>
             <Form.Group controlId="category">
                 <Form.Label>Тип статьи:</Form.Label>
-                <Form.Control as="select" onChange={changeCategoryHandler} value={categoryId}>
+                <Form.Control as="select" onChange={changeCategoryHandler} value={categoryId ? categoryId: 'default'}>
                     <option value="default" disabled >Выберите тип статьи</option>
                     {options}
                 </Form.Control>

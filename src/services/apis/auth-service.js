@@ -1,7 +1,18 @@
 import http from "./settings/http-common";
+import authHeader from "./settings/auth-header";
 
-const register = (username, email, password) => {
-    return http.post("/auth/signup", {username, email, password})
+const register = (username, email, lastName, firstName, middleName, roleAdmin, roleModerator, password) => {
+    return http.post("/auth/signup", 
+    {
+        email: email,
+        password: password,
+        role: [
+            "ROLE_MODERATOR"
+        ],
+        username: username,
+        fiurstname: firstName
+      }
+    , { headers: authHeader() })
 }
 
 const login = (username, password) => {

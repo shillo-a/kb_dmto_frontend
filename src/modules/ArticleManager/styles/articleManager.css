@@ -1,0 +1,5 @@
+/* Модальные окна bootstrap делают paddin 19px*/
+.article-manager-nav{
+    margin-right: 0px !important;
+    padding-right: 0px !important;
+}

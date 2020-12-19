@@ -40,6 +40,7 @@ const App = () => {
 
     const [statusFetchData, setStatusFetchData] = useState(false)
     useEffect(()=>{
+        
         const user = AuthService.getCurrentUser();
         if(user){
             setCurrentUser(user)
@@ -66,6 +67,10 @@ const App = () => {
         setStatusFetchData(true)
     }, [])
 
+    useEffect(()=>{
+        console.log('app works')
+    })
+
 
   return (
     <React.Fragment>
@@ -77,10 +82,10 @@ const App = () => {
                     <Route exact path='/home' render={(props) => permissions.isAuthenticated?(<Home {...props}/>):(<Redirect to='/login'/>)} />
                     <Route path='/profile' render={(props) => permissions.isAuthenticated?(<Profile {...props} currentUser={currentUser} permissions={permissions}/>):(<Redirect to='/login'/>)}/>
                     
-                    <Route exact path={'/article-manager/:articleId'} render={(props) => permissions.isAuthenticated?(<ArticleManager {...props} permissions={permissions}/>):(<Redirect to='/login'/>)}/>
+                    <Route exact path={'/article-manager/:articleId'} render={(props) => permissions.isAuthenticated?(<ArticleManager {...props} permissions={permissions} currentUser={currentUser}/>):(<Redirect to='/login'/>)}/>
 
                     <Route exact path={'/category/:categoryId/:categoryKey'} render={(props) => permissions.isAuthenticated?(<AllPublishedArticles {...props}/>):(<Redirect to='/login'/>)}/>
-                    <Route exact path={'/article/:articleId'} render={(props) => permissions.isAuthenticated?(<PublishedArticle {...props}/>):(<Redirect to='/login'/>)}/>
+                    <Route exact path={'/article/:articleId'} render={(props) => permissions.isAuthenticated?(<PublishedArticle {...props} currentUser={currentUser}/>):(<Redirect to='/login'/>)}/>
                     
                     {/* Создание новой статьи */}
                     <Route exact path={'/article-master/'} render={(props) => permissions.isAuthenticated?(<ArticleMaster {...props}/>):(<Redirect to='/login'/>)}/>

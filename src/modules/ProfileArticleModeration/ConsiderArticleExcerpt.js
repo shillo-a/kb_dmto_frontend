@@ -7,7 +7,7 @@ const ConsiderArticleExcerpt = ({ considerArticle }) => {
     return (
         <tr>
             <td>{considerArticle.title}</td>
-            <td>{considerArticle.category}</td>
+            <td>{considerArticle.category.category}</td>
             <td className="text-center">
                 <OverlayTrigger placement="top" delay={{ show: 100, hide: 100 }} overlay={<Tooltip id="button-tooltip">Перейти к управлению статьей</Tooltip>}>
                     <Link to={`/article-manager/${considerArticle.id}`}>

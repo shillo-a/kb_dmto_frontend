@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Jumbotron, Row, Container } from 'react-bootstrap';
+import { Col, Jumbotron, Row, Container, OverlayTrigger, Button, Tooltip } from 'react-bootstrap';
 
 
 import ArticleService from '../../services/apis/article-service'
@@ -9,8 +9,9 @@ import FavoriteSign from './FavoriteSign';
 import Contents from '../Section/Contents'
 import ArticleSections from '../ArticleSections/ArticleSections'
 import EditArticleButton from './EditArticleButton';
+import { CheckCircleFill } from 'react-bootstrap-icons';
 
-const PublishedArticle = ({ match, location }) => {
+const PublishedArticle = ({ match, location, currentUser }) => {
 
     const { articleId } = match.params
     const [publishedArticle, setPublishedArticle] = useState('')
@@ -38,7 +39,10 @@ const PublishedArticle = ({ match, location }) => {
     }, [articleId])
 
     return (
+        
         <React.Fragment>
+        {publishedArticle && publishedArticle.status.id ==='published' ?
+        <>
             <Jumbotron>
             <Row>
                 <Col md={10}>
@@ -46,7 +50,18 @@ const PublishedArticle = ({ match, location }) => {
                 </Col>
                 <Col md={2} className="d-flex">
                     <EditArticleButton articleId={articleId}/>
-                    <FavoriteSign articleId={articleId}/>
+                    {currentUser.id === publishedArticle.user.id?
+                        <>
+                        <OverlayTrigger placement="top" delay={{ show: 100, hide: 100 }} overlay={<Tooltip id="button-tooltip">Это ваша статья</Tooltip>}>
+                            <Button variant="link">
+                                <CheckCircleFill size={30}/>
+                            </Button>
+                        </OverlayTrigger>
+                        </>
+                        :
+                        <FavoriteSign articleId={articleId}/>
+                    }
+                    
                 </Col>
             </Row>
             </Jumbotron>
@@ -54,7 +69,11 @@ const PublishedArticle = ({ match, location }) => {
                 <Contents sections={publishedArticle.sections}/>
                 <ArticleSections sections={publishedArticle.sections}/>
             </Container>
+        </>
+        : 
+        <></>}
         </React.Fragment>
+        
     )
 }
 
