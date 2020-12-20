@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 
 import DraftEditorComment from '../DraftEditor/DraftEditorComment'
 
 const AddCommentForm = () => {
+    const [dummyObesrver, setDummyObesrver] = useState('')
+
+    
+    const [comment, setComment] = useState('')
+    
+
+
+
     return (
         <div>
             <h3>Написать комментарий</h3>

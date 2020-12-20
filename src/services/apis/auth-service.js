@@ -4,13 +4,12 @@ import authHeader from "./settings/auth-header";
 const register = (username, email, lastName, firstName, middleName, roleAdmin, roleModerator, password) => {
     return http.post("/auth/signup", 
     {
-        email: email,
-        password: password,
-        role: [
-            "ROLE_MODERATOR"
-        ],
         username: username,
-        fiurstname: firstName
+        password: password,
+        email: email,
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName
       }
     , { headers: authHeader() })
 }

@@ -2,22 +2,30 @@ import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import DraftEditorCommentPreview from '../DraftEditor/DraftEditorCommentPreview'
 
-const Comment = () => {
-    const testCommentRaw = "{\"blocks\":[{\"key\":\"d5gjv\",\"text\":\"Тестовый комментарий 1\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"
+const Comment = ({ comment }) => {
     
     return (
-        <Card className="mb-3 border-0 bg-light text-dark">
-            <Card.Body className="pt-0 pb-0">
-                <span className="pr-2 font-weight-bold">Алексей Олегович Шилло</span>
-                <span className="pr-2">01.10.2020 в 17:35</span>
-            </Card.Body>
-            <Card.Body className="pt-0 pb-0">
-                <DraftEditorCommentPreview commentBody={testCommentRaw}/>
-            </Card.Body>
-            <Card.Body className="pt-0 pb-0">
-                <Button className="p-0 m-0 text-muted" size="sm" variant="link">удалить</Button>
-            </Card.Body>
-        </Card>
+        <>
+        {comment? 
+            <Card className="mb-3 border-0 bg-light text-dark">
+                <Card.Body className="pt-0 pb-0">
+                    <div className="pr-2 font-weight-bold">
+                        {comment.user.lastName} {comment.user.firstName} {comment.user.middleName}
+                    </div>
+                    <span className="pr-2">{comment.timestamp}</span>
+                </Card.Body>
+                <Card.Body className="pt-0 pb-0">
+                    <DraftEditorCommentPreview commentBody={comment.comment}/>
+                </Card.Body>
+                <Card.Body className="pt-0 pb-0">
+                    <Button className="p-0 m-0 text-muted" size="sm" variant="link">удалить</Button>
+                </Card.Body>
+            </Card>
+        :
+            <></>
+        }
+
+        </>
     )
 }
 

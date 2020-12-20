@@ -27,7 +27,7 @@ const DraftEditorComment = ({ dummyObesrver, commentBody,  changeCommentBodyHand
         
     const editorStateChangeHandler = (editorState) => {
         setEditorState(editorState)
-        // changeSectionBodyHandler(
+        // changeCommentBodyHandler(
         //     JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
         // )
     }

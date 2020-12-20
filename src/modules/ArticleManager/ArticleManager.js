@@ -71,7 +71,7 @@ const ArticleManager = ({ match, permissions, currentUser }) => {
                     :
                     <></>
                 }
-                {article.status.id==='consider'?
+                {article.status.id==='consider' && currentUser.id===article.user.id ?
                     <>
                     <CallFromPublicationButton articleId={articleId}/>
                     </>
@@ -99,7 +99,7 @@ const ArticleManager = ({ match, permissions, currentUser }) => {
                 <Container>
                     <Contents sections={article.sections}/>
                     <ArticleSections sections={article.sections}/>
-                    <CommentManager />
+                    <CommentManager articleId={articleId}/>
             </Container>
             </>: <></>}
         </React.Fragment>

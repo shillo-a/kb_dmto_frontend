@@ -18,7 +18,6 @@ const AllPublishedArticles = ({ match }) => {
         setStatusGAPA('loading')
         ArticleService.getAllPublishedArticles(categoryId)
             .then(response => {
-                console.log(response.data)
                 setPublishedArticles(response.data)
                 setStatusGAPA('succedded')
             })

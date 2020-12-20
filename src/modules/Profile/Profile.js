@@ -31,7 +31,7 @@ const Profile = ({ match, location, currentUser, permissions }) => {
     <React.Fragment>
 
         <Jumbotron>
-            <h3>Здравствуйте, {currentUser.username} !</h3>
+            <h3>Здравствуйте, {currentUser.firstName} {currentUser.middleName} !</h3>
         </Jumbotron>
 
         <Tabs activeKey={key} onSelect={(k) => setKey(k)} className="justify-content-center">
