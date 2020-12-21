@@ -21,7 +21,6 @@ const PublishedArticle = ({ match, location, currentUser }) => {
         setStatus('loading')
         ArticleService.getArticle(articleId)
             .then(response => {
-                console.log(response.data)
                 setPublishedArticle(
                     // НЕОБХОДИМО ТРАНСФОРМИРОВАТЬ ДАННЫЕ !!!
                     TransformService.convertFromRawArticle(response.data)

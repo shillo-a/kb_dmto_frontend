@@ -67,11 +67,6 @@ const App = () => {
         setStatusFetchData(true)
     }, [])
 
-    useEffect(()=>{
-        console.log('app works')
-    })
-
-
   return (
     <React.Fragment>
         <NavbarMain currentUser={currentUser} permissions={permissions}/>

@@ -30,7 +30,7 @@ const ProfileSettings = () => {
                     <li key={index}>{role}</li>
                   ))}
               </ul>
-
+{/* 
               <form action='' target='_blank'>
                 <button className='m-3 btn btn-sm btn-primary'>
                   Сменить аватар
@@ -38,7 +38,7 @@ const ProfileSettings = () => {
               </form>
               <form action='' target='_blank'>
             <button className='m-3 btn btn-sm btn-primary'>Сменить пароль</button>
-          </form>
+          </form> */}
             </div>
     )
 }

@@ -46,7 +46,6 @@ const ArticleMaster = ({ match }) => {
         setStatusGA('loading')
         ArticleService.getArticle(articleId)
             .then(response => {
-                console.log(response.data)
                 setBaseArticle(
                     // НЕОБХОДИМО ТРАНСФОРМИРОВАТЬ ДАННЫЕ !!!
                     ArticleTransform.convertFromRawArticle(response.data)
@@ -251,9 +250,9 @@ const ArticleMaster = ({ match }) => {
                         dummyObesrver={dummyObesrver}
                     />
                     </DragDropContext>
-                    <Button onClick={() => setKeyTab('preview')}>Продолжить</Button>
-                    <Button onClick={addSectionHandler}>Добавить раздел</Button>
-                    <Button onClick={createSectionsFromTemplateHandler}>Создать разделы из шаблона</Button>
+                    <Button className="mr-2" onClick={() => setKeyTab('preview')}>Продолжить</Button>
+                    <Button className="mr-2" onClick={addSectionHandler}>Добавить раздел</Button>
+                    <Button className="mr-2" onClick={createSectionsFromTemplateHandler}>Создать разделы из шаблона</Button>
                 </Tab>
 
                 <Tab eventKey='preview' title='3. Предпросмотр'>
@@ -276,7 +275,6 @@ const ArticleMaster = ({ match }) => {
                     </Container>
                 </Tab>
             </Tabs>
-            {console.log(article)}
         </React.Fragment>
     )
 }
