@@ -99,7 +99,7 @@ const ArticleManager = ({ match, permissions, currentUser }) => {
                 <Container>
                     <Contents sections={article.sections}/>
                     <ArticleSections sections={article.sections}/>
-                    <CommentManager articleId={articleId}/>
+                    <CommentManager articleId={articleId} currentUser={currentUser}/>
             </Container>
             </>: <></>}
         </React.Fragment>

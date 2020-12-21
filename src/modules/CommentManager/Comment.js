@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import DraftEditorCommentPreview from '../DraftEditor/DraftEditorCommentPreview'
+import DeleteCommentButton from './DeleteCommentButton'
 
-const Comment = ({ comment }) => {
-    
+const Comment = ({ comment, currentUser, setDummyObesrver}) => {
+
     return (
         <>
         {comment? 
@@ -15,10 +16,12 @@ const Comment = ({ comment }) => {
                     <span className="pr-2">{comment.timestamp}</span>
                 </Card.Body>
                 <Card.Body className="pt-0 pb-0">
-                    <DraftEditorCommentPreview commentBody={comment.comment}/>
+                    <DraftEditorCommentPreview comment={comment.comment}/>
                 </Card.Body>
                 <Card.Body className="pt-0 pb-0">
-                    <Button className="p-0 m-0 text-muted" size="sm" variant="link">удалить</Button>
+                    {currentUser.id === comment.user.id?
+                        <DeleteCommentButton commentId={comment.id} setDummyObesrver={setDummyObesrver}/>
+                        : <></>}
                 </Card.Body>
             </Card>
         :

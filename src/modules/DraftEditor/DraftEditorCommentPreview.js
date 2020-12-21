@@ -4,11 +4,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './styles/DraftEditorPreview.css'
 
-const DraftEditorCommentPreview = ({ commentBody }) => {
+const DraftEditorCommentPreview = ({ comment }) => {
 
     const [editorState, setEditorState] = useState(() => {
-        if(commentBody){
-            return EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody)))
+        if(comment){
+            return EditorState.createWithContent(convertFromRaw(JSON.parse(comment)))
         } else {
             return EditorState.createEmpty()
         } 

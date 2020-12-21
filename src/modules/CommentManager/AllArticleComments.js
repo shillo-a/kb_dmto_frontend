@@ -4,7 +4,7 @@ import CommentService from '../../services/apis/comment-service'
 
 import Comment from './Comment'
 
-const AllArticleComments = ({ articleId }) => {
+const AllArticleComments = ({ articleId, currentUser, dummyObesrver, setDummyObesrver }) => {
 
     const [comments, setComments] = useState('')
 
@@ -26,7 +26,7 @@ const AllArticleComments = ({ articleId }) => {
 
     useEffect(()=>{
         getAllComments(articleId)
-    }, [articleId])
+    }, [articleId, dummyObesrver])
 
     var content = ''
     if(statusGAC === 'loading'){
@@ -34,7 +34,7 @@ const AllArticleComments = ({ articleId }) => {
     } else if(statusGAC === 'succedded' && comments){
         content = comments.map(comment => {
             return(
-                <Comment key={comment.id} comment={comment}/>
+                <Comment key={comment.id} comment={comment} currentUser={currentUser} setDummyObesrver={setDummyObesrver}/>
             )
         })
     } else if(statusGAC === 'succedded' && !comments){

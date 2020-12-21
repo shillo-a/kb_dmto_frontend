@@ -4,11 +4,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './styles/DraftEditorComment.css'
 
-const DraftEditorComment = ({ dummyObesrver, commentBody,  changeCommentBodyHandler}) => {
+const DraftEditorComment = ({ comment,  changeComment, dummyObesrver }) => {
 
     const [editorState, setEditorState] = useState(() => {
-        if(commentBody){
-            return EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody)))
+        if(comment){
+            return EditorState.createWithContent(convertFromRaw(JSON.parse(comment)))
         } else {
             return EditorState.createEmpty()
         } 
@@ -16,20 +16,18 @@ const DraftEditorComment = ({ dummyObesrver, commentBody,  changeCommentBodyHand
     
     //Каждый раз при перемещении секции, ререндерим ее
     useEffect(()=>{
-        if(commentBody){
-            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(commentBody))))
+        if(comment){
+            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(comment))))
         } else {
             setEditorState(EditorState.createEmpty())
         } 
-    }, [
-        // dummyObesrver
-    ])
+    }, [dummyObesrver])
         
     const editorStateChangeHandler = (editorState) => {
         setEditorState(editorState)
-        // changeCommentBodyHandler(
-        //     JSON.stringify(convertToRaw(editorState.getCurrentContent())), index
-        // )
+        changeComment(
+            JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+        )
     }
     
     const getFileBase64 = (file, callback) => {

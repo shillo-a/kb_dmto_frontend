@@ -6,7 +6,7 @@ const getAllComments = (articleId) => {
 }
 
 const postComment = (articleId, comment) => {
-    return http.post(`/comment/article/${articleId}`, comment, { headers: authHeader() })
+    return http.post(`/comment/article/${articleId}`, {comment:comment}, { headers: authHeader() })
 }
 
 const deleteComment = (commentId) => {
