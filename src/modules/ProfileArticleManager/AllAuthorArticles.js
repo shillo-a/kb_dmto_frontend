@@ -34,7 +34,8 @@ const AllAuthorArticles = () => {
     } else if(statusGAAA === 'succedded' && authorArticles){
         content = authorArticles.map(authorArticle => {
             // Исключаем опубликованные статьи
-            if(authorArticle.article.statusArticle.id !== 'published'){
+            if(authorArticle.article.statusArticle.id !== 'published' && 
+            authorArticle.article.statusArticle.id !== 'archive'){
             return(<AuthorArticleExcerpt key={authorArticle.id} authorArticle={authorArticle}/>)
             }
         })

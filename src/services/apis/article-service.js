@@ -20,6 +20,10 @@ const createArticle = (article) => {
     return http.post(`/article/createcurruser/category/${article.categoryId}`, article, { headers: authHeader() })
 }
 
+const changeArticle = (articleId, article) => {
+    return http.put(`/article/${articleId}/draft`, article, { headers: authHeader() })
+}
+
 // РАБОТА СО СТАТУСАМИ СТАТЬИ
 //// для всех пользователей по своим статьям:
 const changeFromDraftToConsider = (articleId) => {
@@ -34,10 +38,19 @@ const changeFromDeclineToDraft = (articleId) => {
     return http.put(`/article/${articleId}/change_from_decline_to_draft`,  {}, { headers: authHeader() })
 }
 
+const changeToArchive = (articleId) => {
+    return http.put(`/article/${articleId}/change_to_archive`,  {}, { headers: authHeader() })
+}
+
 //// для модератора по любым статьям:
 const changeFromConsiderToDecline = (articleId) => {
     return http.put(`/article/${articleId}/change_from_consider_to_decline`,  {}, { headers: authHeader() })
 }
+
+const changeFromConsiderToPublished = (articleId) => {
+    return http.put(`/article/${articleId}/change_from_consider_to_published`,  {}, { headers: authHeader() })
+}
+
 
 // API ДЛЯ АДМИНА (owner-а):
 const getArticleAsOwner = (artilceId) => {
@@ -47,11 +60,15 @@ const getArticleAsOwner = (artilceId) => {
 export default {
     getAllPublishedArticles,
     getAllConsiderArticles,
+    
     getArticle,
     createArticle,
+    changeArticle,
 
     changeFromDraftToConsider,
     changeFromConsiderToDraft,
     changeFromDeclineToDraft,
-    changeFromConsiderToDecline
+    changeToArchive,
+    changeFromConsiderToDecline,
+    changeFromConsiderToPublished
 };

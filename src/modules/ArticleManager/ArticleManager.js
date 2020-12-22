@@ -14,8 +14,10 @@ import DeleteArticleButton from './DeleteArticleButton';
 import SendToPublicationButton from './SendToPublicationButton';
 import CallFromPublicationButton from './CallFromPublicationButton';
 import DeclineArticleButton from './DeclineArticleButton';
+import PublishArticleButton from './PublishArticleButton';
 
 import './styles/articleManager.css'
+
 
 
 const ArticleManager = ({ match, permissions, currentUser }) => {
@@ -66,7 +68,7 @@ const ArticleManager = ({ match, permissions, currentUser }) => {
                 {article.status.id==='draft' || article.status.id==='decline'?
                     <>
                     <Button className="mr-2" size="sm" onClick={transitionRedactionHandler}>Редактировать</Button>
-                    <DeleteArticleButton />
+                    <DeleteArticleButton articleId={articleId}/>
                     </>
                     :
                     <></>
@@ -81,7 +83,7 @@ const ArticleManager = ({ match, permissions, currentUser }) => {
                 {article.status.id==='consider' && permissions.isModerator?
                     <>
                     <DeclineArticleButton articleId={articleId}/>
-                    <Button className="mr-2" size="sm" variant="success">Опубликовать</Button>
+                    <PublishArticleButton articleId={articleId}/>
                     </>
                     :
                     <></>

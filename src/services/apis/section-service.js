@@ -5,7 +5,9 @@ const addSectionsToArticle = (articleId, sections) => {
     return http.post(`/section/article/${articleId}`, sections, { headers: authHeader() })
 }
 
-
+const deleteSectionsArticle = (articleId) => {
+    return http.delete(`/section/article/${articleId}`, { headers: authHeader() })
+}
 
 // Для админа (owner-а):
 const getSection = (sectionId) => {
@@ -17,7 +19,6 @@ const createSection = (data) => {
 }
 
 export default {
-    createSection,
-    getSection,
-    addSectionsToArticle
+    addSectionsToArticle,
+    deleteSectionsArticle  
 };

@@ -124,8 +124,6 @@ const ArticleMaster = ({ match }) => {
             })
     }
 
-
-
     const addArticleId = (articleId) => {
         setArticle(prevState => {
             return {...prevState, articleId: articleId}

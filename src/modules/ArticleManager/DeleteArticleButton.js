@@ -1,17 +1,32 @@
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
+import ArticleService from '../../services/apis/article-service'
 import MessageConfirm from '../Messages/MessageConfirm'
 import MessageSuccess from '../Messages/MessageSuccess'
 
-const DeleteArticleButton = () => {
+const DeleteArticleButton = ({ articleId }) => {
+
+    const history = useHistory()
+
+    // CTA - change to archive
+    const [statusCTA, setStatusCTA] = useState('idle')
+    const changeToArchive = (articleId) => {
+        setStatusCTA('loading')
+        ArticleService.changeToArchive(articleId)
+            .then(response => {
+                setShowMS(true)
+                setStatusCTA('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusCTA('failed')
+            })
+    }
 
     const handleDeleteClick = (e) => {
         setShowMC(true)
-    }
-
-    const deleteArticle = () => {
-        console.log('статья удалена')
     }
 
     //УПРАВЛЕНИЕ СООБЩЕНИЯМИ
@@ -21,7 +36,7 @@ const DeleteArticleButton = () => {
     const actionConfirmDescription = 'Удалить'
     const actionConfirm = () => {
         // выполняем действие
-        deleteArticle()
+        changeToArchive(articleId)
         // закрываем Message Confirm
         setShowMC(false)
         // запускае Message Success
@@ -31,6 +46,10 @@ const DeleteArticleButton = () => {
     //message success
     const [showMS, setShowMS] = useState(false)
     const messageSuccess = 'Статья успешно удалена!'
+    const actionSuccess = () => {
+        history.push(`/profile/articles`)
+        window.location.reload()
+    }
 
     return (
         <>
@@ -55,6 +74,7 @@ const DeleteArticleButton = () => {
                 messageSuccess={messageSuccess}
                 showMS={showMS} 
                 setShowMS={setShowMS}
+                actionSuccess={actionSuccess}
             />
 
         </>

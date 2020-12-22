@@ -28,6 +28,17 @@ const SaveArticleDraftButton = ({ article, articleId, addArticleId, saveType}) =
             })
     }
 
+    //если статья была успешно создана, то сохраняем к ней секции
+    useEffect(()=>{
+        if(statusCA === 'succedded'){
+            addSectionsToArticle(
+                articleId, 
+                //Преобразуем текст c JSON в string JSON
+                TransformService.convertSectionBodyToJsonString(article.sections)
+            )
+        }
+    }, [statusCA])
+
     //ASTA - add sections to article
     const [statusASTA, setStatusASTA] = useState('idle')
     const addSectionsToArticle = (articleId, sections) => {
@@ -56,27 +67,55 @@ const SaveArticleDraftButton = ({ article, articleId, addArticleId, saveType}) =
             })
     }
 
+    //ChA - change article (without sections)
+    const [statusChA, setStatusChA] = useState('idle')
+    const changeArticle = (articleId, article) => {
+        setStatusChA('loading')
+        ArticleService.changeArticle(articleId, article)
+            .then(response => {
+                setStatusChA('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusChA('failed')
+            })
+    }
+
+    //DSFA - delete sections from article
+    const [statusDSFA, setStatusDSFA] = useState('idle')
+    const deleteSectionsArticle = (articleId, callback) => {
+        setStatusDSFA('loading')
+        SectionService.deleteSectionsArticle(articleId)
+            .then(response => {
+                callback()
+                setStatusDSFA('succedded')
+            })
+            .catch(error => {
+                console.log(error)
+                setStatusDSFA('failed')
+            })
+    }
+
     //создаем статью только если saveType==="save"
     const saveArticleHandler = (event) =>{
         if(saveType.type==="save"){
+            //выполняем сохранение статьи в БД
             saveArticle(article)
         } else if (saveType.type==="update"){
+            //изменяем статус статьи на draft
             changeFromDeclineToDraft(articleId)
-            console.log('Обновление статьи')
+            //сохраняем изменения в БД
+            ////выполняем update article
+            changeArticle(articleId, {title: article.title, category:{ id: article.categoryId}})
+            ////удаляем старые секции из статьи
+            deleteSectionsArticle(
+                articleId,
+                ////сохраняем новые секции через каллбак
+                () => {addSectionsToArticle(articleId, TransformService.convertSectionBodyToJsonString(article.sections))}
+                )
         }
         setShowMS(true)
     }
-
-    //если статья была успешно создана, то сохраняем к ней секции
-    useEffect(()=>{
-        if(statusCA === 'succedded'){
-            addSectionsToArticle(
-                articleId, 
-                //Преобразуем текст c JSON в string JSON
-                TransformService.convertSectionBodyToJsonString(article.sections)
-            )
-        }
-    }, [statusCA])
 
     //УПРАВЛЕНИЕ СООБЩЕНИЯМИ
     //message success
