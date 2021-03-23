@@ -2,7 +2,7 @@ import http from "./settings/http-common";
 import authHeader from "./settings/auth-header";
 
 const getAllComments = (articleId) => {
-    return http.get(`/comments/article/${articleId}`, { headers: authHeader() })
+    return http.get(`/comment/article/${articleId}`, { headers: authHeader() })
 }
 
 const postComment = (articleId, comment) => {
